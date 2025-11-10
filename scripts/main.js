@@ -1529,9 +1529,10 @@ function updateDateTime() {
   const now = new Date();
   const dateStr = now.toLocaleDateString();
   const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const el = $('dateTime'); if (el) el.textContent = `${dateStr} ${timeStr}`;
+  document.getElementById("dateTime").innerHTML = ` ${dateStr}<br>  ${timeStr}`;
+
 }
-updateDateTime(); setInterval(updateDateTime, 1000);
+
 
 
 /////////////////////////
@@ -1931,7 +1932,7 @@ function savecatch(){
     setTimeout(() => {
     const s = $('startup'); if (!s) return; s.classList.add('fade-out'); setTimeout(() => { try { s.remove(); } catch (e) {} }, 1000);
   }, 2500);
-  repaintBuffer(); repaintWorkBuffer(); scheduleRender(); updatePageCounter(); updateCursor(); 
+  repaintBuffer(); repaintWorkBuffer(); scheduleRender(); updatePageCounter(); updateCursor();  updateDateTime();
     setInterval(() => {
       try {
         saveCurrentPage();
