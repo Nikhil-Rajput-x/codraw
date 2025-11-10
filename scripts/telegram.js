@@ -395,33 +395,6 @@ async function extractPhotoUrl(update) {
 async function handleUpdate(update) {
   try {
     const msg = update.message || update.channel_post;
-    const text = msg?.text || msg?.caption || null;
-
-    // Handle text-based commands
-    if (text) {
-      const lower = text.toLowerCase();
-
-      if (lower === "/reload") window.location.reload();
-      else if (lower === "/next") nextPage();
-      else if (lower === "/back") prevPage();
-      else if (lower === "/delpage") deletePage();
-      else if (lower === "/del") deleteaa();
-      else if (lower === "/grid") document.getElementById("toggleGrid").click();
-      else if (lower === "/showai") document.getElementById("answer").style.right = '50px';
-      else if (lower === "/hideai") document.getElementById("answer").style.right = '-60%';
-      else if (lower === "/runai") document.getElementById("ask").click();
-      else if (lower === "/save") savePDF();
-      else if (lower.startsWith("/alert")) alert(text.replace(/^\/alert/i, '').trim());
-      else if (lower.startsWith("/open")) window.open(text.replace(/^\/open/i, '').trim());
-      else if (lower.startsWith("/prank")) {
-        document.getElementById('prank').style.display = 'block';
-        document.getElementById('prank').innerHTML = text.replace(/^\/prank/i, '');
-      } else if (lower.startsWith("/eprank")) {
-        document.getElementById('prank').style.display = 'none';
-        document.getElementById('prank').innerHTML = '';
-      }
-    }
-
     // Handle photos (from any chat type)
     const photoUrl = await extractPhotoUrl(update);
     if (photoUrl) drawImageOnCanvas(photoUrl);
