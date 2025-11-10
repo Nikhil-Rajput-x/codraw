@@ -1,9 +1,8 @@
 # Codraw
-**Interactive HTML Canvas learning & drawing app** — learn, experiment, and export canvas creations.
 
 <p align="center">
-  <img src="./images/logo.png" alt="Codraw logo" width="200"/><br>
-  <em>Codraw — Learn, draw, and export HTML Canvas projects</em>
+  <img src="./images/logo_name.png" alt="Codraw logo" width="500"/><br><br>
+  <b>Interactive HTML Canvas learning & drawing app. </b>
 </p>
 
 
