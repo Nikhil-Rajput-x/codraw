@@ -13,7 +13,8 @@
 - [Features](#features)  
 - [Installation & usage](#installation--usage)  
 - [Development](#development)  
-- [Exporting & PDF support](#exporting--pdf-support)  
+- [Exporting & PDF support](#exporting--pdf-support) 
+- [Screenshots](#screenshots)
 - [Fonts & assets](#fonts--assets)  
 - [License & credits](#license--credits)  
 - [Contributing](#contributing)  
@@ -87,6 +88,24 @@ Codraw integrates with:
 This allows exporting canvas content as `.pdf` or send directly to telegram directly from the browser, without external dependencies.
 
 ---
+## Screenshots
+
+<p align="center">
+  <table>
+    <tr>
+      <td><img src="./screenshots/load.png" alt="Codraw Screenshot 1" width="300"/></td>
+      <td><img src="./screenshots/gemini.png" alt="Codraw Screenshot 2" width="300"/></td>
+    </tr>
+    <tr>
+      <td><img src="./screenshots/shapes.png" alt="Codraw Screenshot 3" width="300"/></td>
+      <td><img src="./screenshots/shapes2.png" alt="Codraw Screenshot 4" width="300"/></td>
+    </tr>
+    <tr>
+      <td><img src="./screenshots/image.png" alt="Codraw Screenshot 5" width="300"/></td>
+      <td><img src="./screenshots/graph.png" alt="Codraw Screenshot 6" width="300"/></td>
+    </tr>
+  </table>
+</p>
 
 ## Fonts & assets
 The app uses several open-source fonts for UI and creative design:
