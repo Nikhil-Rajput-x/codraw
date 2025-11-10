@@ -32,9 +32,10 @@ It’s designed for learners, educators, and creative minds.
 - ⚙️ Real-time JavaScript rendering and preview.  
 - 🧠 Built-in examples for learning HTML Canvas API.
 - 📈 generate graphs with math equations.
-- 📁 Export your creations as PDF or directly send on Telegram chanel.  
+- 📁 Export and Import your creations or directly send on Telegram chanel.  
 - 🖋️ Uses open-source fonts for clean, aesthetic typography.  
 - 🧩 Lightweight, responsive, and open-source — perfect for learners and tinkerers.
+- prevent from losing data on powercut.
 - Supports **Google Gemini AI** for smart drawing suggestions and code assistance.  
 - Allows **image importing via Telegram Bot** — send images directly to your bot to load them on the canvas.
 ---
