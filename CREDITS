@@ -1,0 +1,86 @@
+Codraw Copyright © 2025 Nikhil Rajput
+Developed and maintained by Nikhil Rajput
+Licensed under the GNU General Public License v3.0
+https://www.gnu.org/licenses/gpl-3.0.html
+
+---
+
+### THIRD-PARTY OPEN SOURCE COMPONENTS
+
+This software includes code and resources from the following open-source projects.
+Their contributions are gratefully acknowledged.
+
+---
+
+#### pdf.min.mjs & pdf.worker.min.mjs
+- Project: https://github.com/mozilla/pdf.js
+- License: Apache License, Version 2.0
+- Copyright © 2024 Mozilla Foundation
+- License URL: http://www.apache.org/licenses/LICENSE-2.0
+
+Contributors (as credited by Mozilla and the PDF.js community):
+- The Mozilla Foundation
+- The PDF.js contributors team (full list available at https://github.com/mozilla/pdf.js/graphs/contributors)
+
+---
+
+#### jspdf.umd.min.js
+- Project: https://github.com/parallax/jsPDF
+- License: MIT License
+- License URL: https://opensource.org/licenses/MIT
+- Copyright © 2010–2021
+  - James Hall <james@parall.ax>, https://github.com/MrRio
+  - yWorks GmbH, http://www.yworks.com
+  - Lukas Holländer <lukas.hollaender@yworks.com>, https://github.com/HackbrettXXX
+  - Aras Abbasi <aras.abbasi@gmail.com>
+  - Aaron Spike, https://github.com/acspike
+  - Willow Systems Corporation, https://github.com/willowsystems
+  - Pablo Hess, https://github.com/pablohess
+  - Florian Jenett, https://github.com/fjenett
+  - Warren Weckesser, https://github.com/warrenweckesser
+  - Youssef Beddad, https://github.com/lifof
+  - Lee Driscoll, https://github.com/lsdriscoll
+  - Stefan Slonevskiy, https://github.com/stefslon
+  - Jeremy Morel, https://github.com/jmorel
+  - Christoph Hartmann, https://github.com/chris-rock
+  - Juan Pablo Gaviria, https://github.com/juanpgaviria
+  - James Makes, https://github.com/dollaruw
+  - Diego Casorran, https://github.com/diegocr
+  - Steven Spungin, https://github.com/Flamenco
+  - Kenneth Glassey, https://github.com/Gavvers
+  - Contributors: siefkenj, ahwolf, rickygu, Midnith, saintclair, eaparango, kim3er, mfo, alnorth, Flamenco
+
+---
+### Fonts
+
+This project uses the following open-source fonts:
+
+1. **Comic Shanns Mono Nerd Font Propo Bold**
+   - Copyright © Ryan L. Oasis and Nerd Fonts contributors
+   - Licensed under the MIT License
+   - https://github.com/ryanoasis/nerd-fonts
+   - Original Comic Shanns Mono licensed under the SIL Open Font License 1.1
+
+2. **Indie Flower**
+   - Copyright © Kimberly Geswein
+   - Licensed under the SIL Open Font License, Version 1.1
+   - https://fonts.google.com/specimen/Indie+Flower
+
+3. **Dancing Script**
+   - Copyright © Impallari Type
+   - Licensed under the SIL Open Font License, Version 1.1
+   - https://fonts.google.com/specimen/Dancing+Script
+
+4. **Latin Modern Math**
+   - Copyright © GUST e-foundry
+   - Licensed under the GUST Font License (GPL-compatible)
+   - https://www.gust.org.pl/projects/e-foundry/latin-modern
+
+
+### ADDITIONAL THANKS
+Special thanks to the open-source community for their continued work on
+libraries and tools that empower developers to build creative and educational
+projects like Codraw.
+
+If you redistribute or modify Codraw, please retain this credits section
+to preserve proper attribution for all contributors.

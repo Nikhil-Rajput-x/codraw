@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!---
+this file is part of project blackboard
+Author : Nikhil kumar
+(c) 2025 uzumaki_arts
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Codraw</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="images/logo.png">
+</head>
+<body onclick="updateCursor()">
+  <div id="pageCounter">Page 1 / 1</div>
+  <div id="toolOptions" class="tool-options">
+  </div>
+	<div class="tabs-colour">
+    <input type="radio" id="white" name="colour"  onclick="currentColor='white'" checked>
+		<label class="tab" for="white" style="background-color: white;">&nbsp;</label>
+		<input type="radio" id="red" name="colour"  onclick="currentColor='red'">
+		<label class="tab" for="red" style="background-color: red;">&nbsp;</label>
+		<input type="radio" id="blue" name="colour"  onclick="currentColor='rgb(2, 2, 105)'">
+		<label class="tab" for="blue" style="background-color: rgb(2, 2, 105);">&nbsp;</label>
+    <input type="radio" id="green" name="colour"  onclick="currentColor='green'">
+		<label class="tab" for="green" style="background-color: green;">&nbsp;</label>
+    <input type="radio" id="orange" name="colour"  onclick="currentColor='orange'">
+		<label class="tab" for="orange" style="background-color: orange;">&nbsp;</label>
+    <input type="radio" id="blue-sky" name="colour"  onclick="currentColor='#0b6efd'">
+		<label class="tab" for="blue-sky" style="background-color: #0b6efd;">&nbsp;</label>
+    <input type="radio" id="purple" name="colour"  onclick="currentColor='purple'">
+		<label class="tab" for="purple" style="background-color: purple;">&nbsp;</label>
+    <input type="radio" id="magenta" name="colour"  onclick="currentColor='magenta'">
+		<label class="tab" for="magenta" style="background-color: magenta;">&nbsp;</label>
+		<input type="radio" id="custom" name="colour"  onclick="currentColor='magenta'">
+		<input type="color" id="colorPicker" value="#00E096" for="custom" style="margin-left: -5px; margin-top: 10px;">
+    <i class="flex-break"></i>
+	</div>
+    <div class="tabs">
+      <input type="radio" id="pencil-1" name="pencilSize"  onclick="pencilSize=1">
+      <label class="tab2" for="pencil-1">S</label>
+      <input type="radio" id="pencil-2" name="pencilSize" onclick="pencilSize=3" checked="">
+      <label class="tab2" for="pencil-2" >M</label>
+      <input type="radio" id="pencil-3" name="pencilSize" onclick="pencilSize=5">
+      <label class="tab2" for="pencil-3">L</label>
+      <input type="radio" id="pencil-4" name="pencilSize" onclick="pencilSize=12">
+      <label class="tab2" for="pencil-4">XL</label>
+      <span class="glider"></span>
+    </div>
+  <div id="toolbar" onclick="selected=null">
+    <label style="display: none;">
+      <input id="pencilSize" type="range" min="1" max="20" value="5">
+    </label>
+    <label style="display: none;">
+      <input id="eraserSize" type="range" min="5" max="100" value="20">
+    </label>
+      <div class="page-changer" onclick="updatePageCounter()">
+    <button onclick="prevPage()" style="border-radius: 20px 0px 0px 20px; margin-right: -5px;" ></button>
+    <button onclick="nextPage()" style="border-radius: 0px 20px 20px 0px; margin: 0px;"></button>
+  </div><span class="sap"></span>
+    <button onclick="undo()" style="border-radius: 20px 0px 0px 20px;">󰕌</button>
+    <button onclick="redo()" style="border-radius: 0px 20px 20px 0px;">󰑎</button>
+    <span class="sap"></span><span class="sap"></span>
+    <button data-tool="select" onclick="document.getElementById('toolOptions').style.display = 'none';" style="border-radius: 20px 0px 0px 20px;">󰇀</button>
+    <button data-tool="eraser" onclick="document.getElementById('toolOptions').style.display = 'none';">󰇾</button>
+    <button data-tool="pencil" onclick="showToolOptions('pencil')"></button>
+    <button data-tool="rect" onclick="showToolOptions('rect')"></button>
+    <button data-tool="cuboid" onclick="showToolOptions('cuboid');" style="border-radius: 0px 20px 20px 0px;"></button>
+    <span class="sap"></span>
+    <button style="border-radius: 20px 0px 0px 20px;" onclick="dotsmaker()">
+<div  id="dot" style="border:2px solid white;border-radius:50px;background-color:transparent;font-family:nerd;padding-top:2px;"></div>
+    </button>
+    <button onclick="deleteaa();" style="color: #cf6679; "></button>
+    <button onclick="addImage()">󰡼</button>
+    <button onclick="addPDF()"></button>
+    <button id="toggleGrid">󰋁</button>
+    <button onclick="document.getElementById('graphModal').style.display = 'block';">󰍘</button>
+  <button id="ask">󰺴</button>
+  <button onclick="location.reload(true);">󰑓</button>
+  <button onclick="toggleFullscreen()">󰊔</button>
+  <button onclick="openPopupsave()">󰆓</button>
+  <button onclick="openPopup()" style="border-radius: 0px 20px 20px 0px;"></button>
+  </div>
+  <button onclick="deletePage()" style="
+    position: fixed; 
+    bottom: 25px;
+    left: 15px; height:auto;
+    padding: 3px 6px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-family: nerd, sans-serif;
+    font-size: 8px;
+    border-radius: 4px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    outline: none;
+    border: none;
+    z-index: 100;">
+  </button>
+  <canvas id="stage" width="1200" height="600"></canvas>
+  <div id="customCursor"></div>
+  <div id="startup">
+    <p id="startupText">Starting...</p>
+  </div>
+  <p style="position: fixed; bottom: 0px; left: 20px; color: #999; font-size: 10px; font-family: nerd; z-index: 9999;">&copy; 2025 Nikhil</p>
+  <div id="propertiesPanel">
+    <div id="ckbox"></div>
+  </div>
+    <div id="answer">
+      <button id="close" onclick="document.getElementById('answer').style.right = '-60%'">x</button>
+    </div>
+  <div id="chartContainer" style="width:500px; height:500px; position: absolute; top: -100%">
+    <canvas id="chart" width="500" height="500"></canvas>
+  </div>
+  <div id="popup" class="popup"><div class="popup-content"></div></div>
+<div id="modalOverlay">
+  <div id="modalBox">
+    <h2>Load Previous Session</h2>
+    <p>Do you want to load the previous session or delete all saved data?</p>
+    <button class="modalBtn loadBtn" id="loadSession"onclick="handleLoad();">Load</button>
+    <button class="modalBtn deleteBtn" id="deleteSession" onclick="handleDelete();">cancle</button>
+  </div>
+</div>
+<div id="prank" style="width: 100%; height: 100%; backdrop-filter: blur(10px); position: fixed; top: 0px; left: 0px; z-index: 9999; display: none;"></div>
+<div id="settingsPanel" style="position:fixed;  color:#fff; padding:20px; border-radius:10px; width:60%; display:none;">
+  <h3> Settings</h3>
+  
+  <label>Telegram Image Bot Token</label>
+  <input type="text" id="telegramImageBotToken"  class="input-box"><br><br>
+  
+  <label>Telegram Bot Token</label>
+  <input type="text" id="telegrambotToken"  resize: none;" class="input-box"><br><br>
+  
+  <label>Gemini API Keys (comma separated)</label>
+  <textarea id="geminiKeys" class="input-box"></textarea><br><br>
+  
+  <label>Water mark</label>
+  <input type="text" id="watermarkinput" resize: none;" class="input-box"><br><br><br><br>
+
+  <label>Background Color</label>
+  <div style="display: flex; flex-direction: row; gap: 10px;">
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#292966'" style="background-color: #292966; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0A3C30'" style="background-color: #0A3C30; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0a2e33'" style="background-color: #0a2e33; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#332216'" style="background-color: #332216; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#161821'" style="background-color: #161821; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0f0e47'" style="background-color: #0f0e47; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <input type="color" id="bgColor" style="height: 35px; width: 50px; border-radius: 10px;">
+  </div>
+  <br><br>
+  
+  <h4>Classes</h4>
+  <div id="classList"></div>
+  <input type="text" id="className" placeholder="Class Name" class="input-box">
+  <input type="text" id="classChatId" placeholder="Chat ID" class="input-box">
+  <button onclick="addClassUI()" class="btnadd"></button>
+  
+  <br><br><div class="form-group">
+  <label style="display: flex;  flex-direction: row; font-size: 30px;">Show Cursor:
+    <input type="checkbox" id="cursorToggle" class="remove-from-screen">
+<label for="cursorToggle" class="switch"></label>
+
+  </label>
+</div>
+<br>
+  <button onclick="saveSettingsUI()" class="modalBtn loadBtn">Save</button>
+  <button onclick="toggleSettings()" class="modalBtn deleteBtn">Close</button>
+</div>
+
+<button onclick="toggleSettings()" style="position:fixed; top:10px; left:10px; font-family: nerd;  font-size: 17px; color: #c9c9c9; background: rgba(0,0,0,0.2); border: none; backdrop-filter: blur(10px); padding: 5px 20px; border-radius: 11px; " id="watermark">Codraw</button>
+
+
+<!-- Graph Modal (paste into your HTML) -->
+<div id="graphModal" style="display:none; position: fixed; z-index: 99999; left:50%; top:50%; transform:translate(-50%,-50%); width: auto; max-width:94%; background: rgba(27, 28, 41, 0.854); border-radius:12px; padding: 12px; box-sizing: border-box;">
+  <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
+        <div class="preview" id="mathPreview" style="flex:1;  border-radius:8px; border:1px solid #444444c8; background:#0d1219e0; color:#fff; font-family: 'latin-math';" ></div>
+
+    <input id="fnInput" placeholder="e.g. sin(x)  |  2*sin(x)  |  x^2  |  cot(x)  |  sinh(2x)" style="flex:1; padding:8px; border-radius:8px; border:1px solid #444; background:#111; color:#fff; display: none;">
+    <button id="gm-plot" class="mathpt"></button>
+    <button id="gm-import" class="mathpt">󱀯</button>
+    <button id="gm-zoom-in" class="mathpt"></button>
+    <button id="gm-zoom-out" class="mathpt"></button>
+    <button id="gm-reset" class="mathpt">󰜉</button>
+    <button id="gm-close" class="mathpt" style="color:#d33;">󰅚</button>
+  </div>
+
+  <div style="display:flex; gap:12px;">
+    <canvas id="graphCanvas" width="500" height="500" style="flex:0 0 760px; max-width:100%; height:420px; border-radius:8px; background: transparent; border: 1px solid #444;"></canvas>
+
+    <div id="gm-rightpanel" style="width: 220px; display:flex; flex-direction:column; gap:8px;">
+      <div id="gm-keypad" style="display:grid; grid-template-columns: repeat(9, 1fr); gap:6px; display: none;"></div>
+    <div class="buttons" style="margin-top:12px; font-family: 'latin-math';">
+      <button>1</button><button>2</button><button>3</button><button style="font-family: 'latin-math';">𝒙</button>
+      <button>4</button><button>5</button><button>6</button><button>π</button>
+      <button>7</button><button>8</button><button>9</button><button>e</button>
+      <button>+</button><button>0</button><button>-</button><button>^</button>
+      <button>*</button><button>/</button><button>√</button><button>→</button>
+      <button>(</button><button>.</button><button>)</button><button>⌫</button>
+      <button>sin</button><button>cos</button><button>tan</button><button>ln</button>
+      <button>csc</button><button>sec</button><button>cot</button><button>log</button>
+      <button>sinh</button><button>cosh</button><button>tanh</button><button>abs</button>
+    </div>
+  </div>
+
+
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import * as pdfjsLib from './scripts/pdf.min.mjs';
+  pdfjsLib.GlobalWorkerOptions.workerSrc = './pdf.worker.min.mjs';
+  </script><script type="module">
+
+  import * as pkg from "https://esm.run/@google/generative-ai";
+  window.GoogleGenerativeAI = pkg.GoogleGenerativeAI || pkg.default.GoogleGenerativeAI;
+</script>
+  <script src="./scripts/setting.js"></script>
+  <script src="./scripts/jspdf.umd.min.js"></script>
+  <script src="./scripts/main.js"></script>
+  <script src="./scripts/pdf.js"></script>
+  <script src="./scripts/server.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai/dist/index.umd.js"></script>
+  <script src="./scripts/telegram.js"></script>
+  <script src="./scripts/graph.js"></script>
+  <script src="./scripts/gemini.js"></script>
+  <script>
+    showToolOptions('pencil')
+  </script>
+
+<script>
+
+</script>
+
+</body>
+</html>
