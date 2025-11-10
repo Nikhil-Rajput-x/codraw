@@ -1,7 +1,11 @@
 # Codraw
 **Interactive HTML Canvas learning & drawing app** — learn, experiment, and export canvas creations.
 
-![Codraw logo](./images/logo.png)
+<p align="center">
+  <img src="./images/logo.png" alt="Codraw logo" width="200"/><br>
+  <em>Codraw — Learn, draw, and export HTML Canvas projects</em>
+</p>
+
 
 ---
 
@@ -33,7 +37,8 @@ Codraw blends coding and creativity, making it simple to visualize code-driven d
 - 📁 Export your creations as PDF or directly send on Telegram chanel.  
 - 🖋️ Uses open-source fonts for clean, aesthetic typography.  
 - 🧩 Lightweight, responsive, and open-source — perfect for learners and tinkerers.
-
+- Supports **Google Gemini AI** for smart drawing suggestions and code assistance.  
+- Allows **image importing via Telegram Bot** — send images directly to your bot to load them on the canvas.
 ---
 
 
@@ -45,7 +50,8 @@ Codraw blends coding and creativity, making it simple to visualize code-driven d
    git clone https://github.com/Nikhil-Rajput-x/codraw.git
    cd codraw
    ```
-2. Open `index.html` directly in your browser. [⚠️] internet may not work due to CORS protection
+2. Open `index.html` directly in your browser. 
+- ⚠️ internet may not work due to CORS protection
 - quick fix : use electron app or npm 
 
 If you want a live server with hot reload:
@@ -66,13 +72,20 @@ You can freely extend the app by:
 - Enhancing export options or UI styling.  
 
 ---
+## Google Gemini support
+- Support google Gemini AI 
+- you need to enter your own apikey
+- support multiple key
+
+---
+
 
 ## Exporting & PDF support
 Codraw integrates with:
-- **PDF.js** for reading and previewing PDFs (Apache 2.0 License).  
-- **jsPDF** for generating and exporting PDFs (MIT License).  
+- **pdf.min.mjs & pdf.worker.min.mjs** for reading and previewing PDFs (Apache 2.0 License).  
+- **jspdf.umd.min.js** for generating and exporting PDFs (MIT License).  
 
-This allows exporting canvas content as `.png` or `.pdf` directly from the browser, without external dependencies.
+This allows exporting canvas content as `.pdf` or send directly to telegram directly from the browser, without external dependencies.
 
 ---
 
@@ -96,8 +109,8 @@ See the [CREDITS](./CREDITS) file for full details.
 You are free to use, modify, and distribute it under the same license terms.
 
 **Included open-source components:**
-- [PDF.js](https://github.com/mozilla/pdf.js) — Apache 2.0  
-- [jsPDF](https://github.com/parallax/jsPDF) — MIT  
+- [pdf.min.mjs & pdf.worker.min.mjs](https://github.com/mozilla/pdf.js) — Apache 2.0  
+- [jspdf.umd.min.js](https://github.com/parallax/jsPDF) — MIT  
 - [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) — MIT  
 - [Google Fonts](https://fonts.google.com/) — SIL OFL 1.1  
 
