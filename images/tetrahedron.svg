@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220">
+  <!-- Base triangle -->
+  <polygon points="60,170 160,170 110,70" stroke="white" stroke-width="2" fill="none"/>
+  <!-- Apex -->
+  <line x1="110" y1="30" x2="60" y2="170" stroke="white" stroke-width="2"/>
+  <line x1="110" y1="30" x2="160" y2="170" stroke="white" stroke-width="2"/>
+  <line x1="110" y1="30" x2="110" y2="70" stroke="white" stroke-width="2"/>
+</svg>

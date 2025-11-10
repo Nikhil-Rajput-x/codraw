@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220">
+  <!-- Base square -->
+  <rect x="60" y="120" width="100" height="100" stroke="white" stroke-width="10" fill="none"/>
+  <!-- Apex -->
+  <line x1="110" y1="40" x2="60" y2="120" stroke="white" stroke-width="10"/>
+  <line x1="110" y1="40" x2="160" y2="120" stroke="white" stroke-width="10"/>
+  <line x1="110" y1="40" x2="60" y2="220" stroke="white" stroke-width="10"/>
+  <line x1="110" y1="40" x2="160" y2="220" stroke="white" stroke-width="10"/>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220">
+  <!-- Rhombus -->
+  <polygon points="40,40 180,40 140,180 0,180" stroke="white" stroke-width="3" fill="none"/>
+
+</svg>

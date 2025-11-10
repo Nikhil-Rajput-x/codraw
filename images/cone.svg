@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220">
+  <!-- Base ellipse -->
+  <ellipse cx="110" cy="170" rx="70" ry="20" stroke="white" stroke-width="2" fill="none"/>
+  <!-- Sides -->
+  <line x1="40" y1="170" x2="110" y2="30" stroke="white" stroke-width="2"/>
+  <line x1="180" y1="170" x2="110" y2="30" stroke="white" stroke-width="2"/>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220">
+  <!-- Outer circle -->
+  <circle cx="110" cy="110" r="80" stroke="white" stroke-width="2" fill="none"/>
+  <!-- Equator (ellipse) -->
+  <ellipse cx="110" cy="110" rx="80" ry="30" stroke="white" stroke-width="2" fill="none"/>
+</svg>
