@@ -113,9 +113,7 @@ The app uses several open-source fonts for UI and creative design:
 | Font | License | Source |
 |------|----------|--------|
 | Comic Shanns Mono Nerd Font Propo Bold | MIT + OFL 1.1 | [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) |
-| MANIC / MANIC Sketches | SIL OFL 1.1 | Fontshare / Public sources |
 | Indie Flower | SIL OFL 1.1 | [Google Fonts](https://fonts.google.com/specimen/Indie+Flower) |
-| Dancing Script | SIL OFL 1.1 | [Google Fonts](https://fonts.google.com/specimen/Dancing+Script) |
 | Latin Modern Math | GUST Font License | [GUST Foundry](https://www.gust.org.pl/projects/e-foundry/latin-modern) |
 
 See the [CREDITS](./CREDITS) file for full details.
