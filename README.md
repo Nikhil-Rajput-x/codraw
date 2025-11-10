@@ -23,16 +23,15 @@
 
 ## Overview
 **Codraw** is an open-source web application that teaches and demonstrates the HTML5 Canvas API with an interactive editor, live preview, and export tools.  
-It’s designed for learners, educators, and creative coders who want to explore the intersection of code and art.
-
-Codraw blends coding and creativity, making it simple to visualize code-driven drawings, generate images, and export projects — all within a modern and minimalist interface.
+It’s designed for learners, educators, and creative minds.
 
 ---
 
 ## Features
 - 🖌️ Interactive canvas drawing and editing tools (brushes, shapes, fills, strokes).  
 - ⚙️ Real-time JavaScript rendering and preview.  
-- 🧠 Built-in examples for learning HTML Canvas API.  
+- 🧠 Built-in examples for learning HTML Canvas API.
+- 📈 generate graphs with math equations.
 - 📁 Export your creations as PDF or directly send on Telegram chanel.  
 - 🖋️ Uses open-source fonts for clean, aesthetic typography.  
 - 🧩 Lightweight, responsive, and open-source — perfect for learners and tinkerers.
