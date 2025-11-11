@@ -457,7 +457,7 @@ input:focus{
 #answer {
   position: absolute;
   top: 100px;
-  right: -60%;
+  right: 50px;
   width: 50%; 
   max-height: 60%;
   padding: 10px;
