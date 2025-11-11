@@ -19,19 +19,13 @@ async function gemini() {
   const dataUrl = canvas.toDataURL("image/png");
 
   document.getElementById("answer").innerHTML =
-    '<button id="close" onclick="document.getElementById(\'answer\').style.right = \'-60%\'">x</button> Thinking...';
+    '<button id="close" onclick="document.getElementById(\'answer\').style.right = \'none\'">x</button> Thinking...';
 
   try {
     const result = await model.generateContent([
-      { text: "Read this whiteboard. "+
-          "If it contains one or more mathematical equations or expressions, output them as clean valid LaTeX inside curly braces { ... }. "+
-          "No $, \\(, \\), or \\[ \\] wrappers. "+
-          "Only output the expression for y (right-hand side), e.g., for y = x/2, output {x/2}. Always use \frac{a}{b} for fractions."+
-          "Use standard LaTeX names: \\sin, \\cos, \\tan, \\cot, \\sec, \\csc, \\ln, \\log, \\sqrt, \\frac, \\pi, e, x, y, z, etc. "+
-          "No spaces between numbers and variables (2x not 2 x). "+
+      { text: "Read this image. "+
           "If it is a math word problem or question, also solve it and give the equation(s) and then Answer:. "+
-          "If no math is found but there is a question, only give question:. and  Answer:. "+
-          "If nothing is math or a question, explain briefly what is visible. and don't say that there is no mathemetical equation or expression are present." },
+          "If nothing is math or a question, explain briefly what is visible." },
       {
         inlineData: {
           data: dataUrl.split(",")[1],
@@ -44,20 +38,20 @@ async function gemini() {
     console.log(text);
 
     document.getElementById("answer").innerHTML =
-      '<button id="close" onclick="document.getElementById(\'answer\').style.right = \'-60%\'">x</button> ' + text;
+      '<button id="close" onclick="document.getElementById(\'answer\').style.right = \'none\'">x</button> ' + text;
 
     const mathx = parseGeminiMathResponse(text.trim());
     if (mathx) {
       const fn = makeEvaluatorFromLatex(mathx);
       if(fn){
       drawGraph(fn);
-    document.getElementById("answer").innerHTML = '<button id="close" onclick="document.getElementById(\'answer\').style.right = \'-60%\'">x</button> ' + text + "";}else{
-      document.getElementById("answer").innerHTML ='<button id="close" onclick="document.getElementById(\'answer\').style.right = \'-60%\'">x</button> ' + text + "<br><p style='font-size: 12px; color: #eeaabb'>[! if you are using it for complex graph can't be always perfect. !] <br> [ this is only designed for simple equations not complex one ]<br>[ It is using gemini-1.5-flash for detacting hand writting so even messy handwritting can also cause errors ]<p>";}
+    document.getElementById("answer").innerHTML = '<button id="close" onclick="document.getElementById(\'answer\').style.display = \'none\'">x</button> ' + text + "";}else{
+      document.getElementById("answer").innerHTML ='<button id="close" onclick="document.getElementById(\'answer\').style.display = \'none\'">x</button> ' + text + "<br><p style='font-size: 12px; color: #eeaabb'>[! if you are using it for complex graph can't be always perfect. !] <br> [ this is only designed for simple equations not complex one ]<br>[ It is using gemini-1.5-flash for detacting hand writting so even messy handwritting can also cause errors ]<p>";}
     }
 
   } catch (err) {
     console.error(err);
-          document.getElementById("answer").innerHTML ='<button id="close" onclick="document.getElementById(\'answer\').style.right = \'-60%\'">x</button>' +"<br><p style='font-size: 20px; color: #eeaabb'>[!] Unexcepted error happen check cosole for more detail.<p>";
+          document.getElementById("answer").innerHTML ='<button id="close" onclick="document.getElementById(\'answer\').style.display = \'none\'">x</button>' +"<br><p style='font-size: 20px; color: #eeaabb'>[!] Unexcepted error happen check cosole for more detail.<p>";
   }
 }
 
@@ -66,14 +60,14 @@ document.getElementById('answer').innerHTML = '';
 
 document.getElementById("ask").addEventListener("click", async () => {
     if (document.getElementById('answer').innerHTML === ''){ 
-      document.getElementById("answer").style.right = '50px';
+      document.getElementById("answer").style.display = 'block';
       gemini();
   }else{
-      if (document.getElementById("answer").style.right === '50px'){
-        document.getElementById("answer").style.right = '50px';
+      if (document.getElementById("answer").style.display === 'block'){
+        document.getElementById("answer").style.display = 'block';
         gemini();
       }
       else{
-        document.getElementById("answer").style.right = '50px';
+        document.getElementById("answer").style.display = 'block';
       };
   }});
