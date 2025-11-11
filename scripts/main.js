@@ -1357,8 +1357,8 @@ async function savePDF(fname) {
   for (let i = 0; i < pages.length; i++) {
     if (i > 0) pdf.addPage([canvas.width, canvas.height], canvas.width > canvas.height ? 'l' : 'p');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const settings = JSON.parse(localStorage.getItem("appSettings") || "{}");
-    ctx.fillStyle = settings.backgroundColor || "#1618211";
+    const settings = JSON.parse(localStorage.getItem("Codraw_Settings") || "{'watermark':'codraw'}");
+    ctx.fillStyle = settings.backgroundColor || "#161821";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     const pageObjects = pages[i];
     for (const o of pageObjects) {

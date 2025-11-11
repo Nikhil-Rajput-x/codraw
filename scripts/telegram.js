@@ -19,8 +19,8 @@ async function sharePDF() {
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 // ✅ Use background color from settings
-const settings = JSON.parse(localStorage.getItem("appSettings") || "{}");
-ctx.fillStyle = settings.backgroundColor || "#1618211";
+const settings = JSON.parse(localStorage.getItem("Codraw_Settings") || "{}");
+ctx.fillStyle = settings.backgroundColor || "#161821";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 const pageObjects = pages[i];
@@ -47,8 +47,7 @@ for (const o of pageObjects) {
     pdf.setTextColor(28, 227, 117);
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(20);
-    pdf.text('Arihantam Academy', 10, canvas.height - 10);
-
+    pdf.text(settings.watermark, 10, canvas.height - 10);
     // ✅ Date
     pdf.setTextColor(255, 255, 255);
     pdf.setFont('times', 'normal');
@@ -80,7 +79,7 @@ async function sendPDFtoTelegram(pdfBlob) {
   }
 
   if (!chat_ids[cls]) {
-    alert("⚠️ No chat ID found for class: " + cls);
+    alert("⚠️ No chat ID found for channel: " + cls);
     return;
   }
 
@@ -91,7 +90,7 @@ async function sendPDFtoTelegram(pdfBlob) {
   return new Promise((resolve, reject) => {
     const formData = new FormData();
     formData.append("chat_id", CHAT_ID);
-    formData.append("document", pdfBlob, clas + " " + subj + " " + inputx + ".pdf");
+    formData.append("document", pdfBlob, inputx + ".pdf");
     const xhr = new XMLHttpRequest();
     xhr.open("POST", `https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, true);
 
@@ -135,7 +134,7 @@ function buildClassOptions() {
   if (!settings || !settings.classes) return "";
 
   return settings.classes
-    .map(c => `<option value="${c.name}">${c.name === "" ? "General Competition" :  c.name}</option>`)
+    .map(c => `<option value="${c.name}">${c.name === "" ? "" :  c.name}</option>`)
     .join("");
 }
 
@@ -147,22 +146,9 @@ function openPopup() {
       <h2 class="title">Select Class & Subject</h2>
       <!-- Dropdowns -->
       <div class="form-group">
-        <label>Class:</label>
+        <label>Telegram Channel:</label>
         <select id="classSelect" class="dropdown">
           ${classOptions}
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Subject:</label>
-        <select id="subjectSelect" class="dropdown">
-          <option value="physics">Physics</option>
-          <option value="chemistry">Chemistry</option>
-          <option value="biology">Biology</option>
-          <option value="Maths">Maths</option>
-          <option value="Science">Science</option>
-          <option value="English">English</option>
-          <option value="GK">GK</option>
-          <option value="GS">GS</option>
         </select>
       </div>
       <!-- Input -->
@@ -188,29 +174,9 @@ function openPopupsave() {
   document.getElementById("popup").innerHTML = `
     <div class="popup-content">
       <h2 class="title">Select Class & Subject</h2>
-      <!-- Dropdowns -->
-      <div class="form-group">
-        <label>Class:</label>
-        <select id="classSelect" class="dropdown">
-          ${classOptions}
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Subject:</label>
-        <select id="subjectSelect" class="dropdown">
-          <option value="physics">Physics</option>
-          <option value="chemistry">Chemistry</option>
-          <option value="biology">Biology</option>
-          <option value="Maths">Maths</option>
-          <option value="Science">Science</option>
-          <option value="English">English</option>
-          <option value="GK">GK</option>
-          <option value="GS">GS</option>
-        </select>
-      </div>
       <!-- Input -->
       <div class="form-group">
-        <label>Topic:</label>
+        <label>Enter File Name:</label>
         <input type="text" id="selectedInput" class="input-box" readonly />
       </div>
       <!-- Keyboard -->
@@ -262,11 +228,10 @@ function buildKeyboard() {
 }
 
 function saveSelection(x) {
-  cls = document.getElementById("classSelect").value;
-  subj = document.getElementById("subjectSelect").value;
+
   inputx = document.getElementById("selectedInput").value;
   if (x){
-      savePDF(cls+' '+subj+' '+' '+inputx+' ')
+      savePDF(inputx)
 }
   else{
     document.getElementById("popup").innerHTML = '<div class="upload-container"><div class="paper-plane"></div><div class="progress-bar"><div class="progress" id="pdfUploadProgress"></div></div><div class="percentage" id="pdfStatus">0%</div><div class="status glow" id="status">Please wait while uploading file...</div>'
@@ -302,44 +267,6 @@ async function sendSessionToTelegram() {
   const data = await res.json();
   console.log("Telegram response:", data);
 }
-
-
-function loadSessionFromJSON(jsonString) {
-  try {
-    const session = JSON.parse(jsonString);
-    pages = session.pages || [];
-    currentPage = session.currentPage || 0;
-    objects = deepClone(pages[currentPage]) || [];
-    selectedIndex = null;
-
-    updatePageCounter();
-    repaintBuffer();
-    repaintWorkBuffer();
-    scheduleRender();
-    console.log("✅ Session restored");
-  } catch (e) {
-    console.error("❌ Failed to load session:", e);
-  }
-}
-
-function loadSessionFromJSON(jsonString) {
-  try {
-    const session = JSON.parse(jsonString);
-    pages = session.pages || [];
-    currentPage = session.currentPage || 0;
-    objects = deepClone(pages[currentPage]) || [];
-    selectedIndex = null;
-
-    updatePageCounter();
-    repaintBuffer();
-    repaintWorkBuffer();
-    scheduleRender();
-    console.log("✅ Session restored");
-  } catch (e) {
-    console.error("❌ Failed to load session:", e);
-  }
-}
-
 
 // Image receiver
 let lastUpdateId = 0;
