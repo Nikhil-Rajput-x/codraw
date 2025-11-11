@@ -174,7 +174,7 @@ function openPopupsave() {
   document.getElementById("popup").innerHTML = `
     <div class="popup-content">
       <h2 class="title">Select Name</h2>
-      <input style="display:none;" type="text" value="Codraw"> 
+      <input style="display:none;" type="text" value="Codraw" id="classSelect"> 
       <!-- Input -->
       <div class="form-group">
         <label>Enter File Name:</label>
