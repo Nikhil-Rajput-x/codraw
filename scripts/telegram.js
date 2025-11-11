@@ -143,7 +143,7 @@ function openPopup() {
 
   document.getElementById("popup").innerHTML = `
     <div class="popup-content">
-      <h2 class="title">Select Class & Subject</h2>
+      <h2 class="title">Select Channel & Name</h2>
       <!-- Dropdowns -->
       <div class="form-group">
         <label>Telegram Channel:</label>
@@ -173,7 +173,7 @@ function openPopupsave() {
 
   document.getElementById("popup").innerHTML = `
     <div class="popup-content">
-      <h2 class="title">Select Class & Subject</h2>
+      <h2 class="title">Select Name</h2>
       <!-- Input -->
       <div class="form-group">
         <label>Enter File Name:</label>
