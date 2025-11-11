@@ -472,6 +472,7 @@ input:focus{
   backdrop-filter: blur(8px);
   font-size: 25px;
   padding: 70px;
+  display: none;
 }
 
 #answer::-webkit-scrollbar {
