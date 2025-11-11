@@ -13,7 +13,7 @@ async function gemini() {
   console.log(key);
   const apiKey = key; 
   const genAI = new window.GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   const canvas = document.getElementById("stage");
   const dataUrl = canvas.toDataURL("image/png");
