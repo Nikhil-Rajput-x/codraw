@@ -54,8 +54,10 @@ for (const o of pageObjects) {
     pdf.setFontSize(15);
     const now = new Date();
     const dateStr = now.toLocaleDateString().replaceAll('/', '-');
-    const dateWidth = pdf.getTextWidth(dateStr);
-    pdf.text(dateStr, canvas.width - 10 - dateWidth, canvas.height - 10);
+    const timeStr = now.toLocaleTimeString(); // e.g. "3:45:23 PM"
+    const dateTimeStr = `${dateStr} ${timeStr}`;
+    const dateWidth = pdf.getTextWidth(dateTimeStr);
+    pdf.text(dateTimeStr, canvas.width - 10 - dateWidth, canvas.height - 10);
   }
 
   // Get Blob
