@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!---
-this file is part of project blackboard
+this file is part of project codraw
 Author : Nikhil kumar
 (c) 2025 uzumaki_arts
 -->
@@ -77,11 +77,11 @@ Author : Nikhil kumar
     <button onclick="addPDF()"></button>
     <button id="toggleGrid">󰋁</button>
     <button onclick="document.getElementById('graphModal').style.display = 'block';">󰍘</button>
-  <button id="ask">󰺴</button>
-  <button onclick="location.reload(true);">󰑓</button>
-  <button onclick="toggleFullscreen()">󰊔</button>
-  <button onclick="openPopupsave()">󰆓</button>
-  <button onclick="openPopup()" style="border-radius: 0px 20px 20px 0px;"></button>
+    <button id="ask">󰺴</button>
+    <button onclick="location.reload(true);">󰑓</button>
+    <button onclick="toggleFullscreen()">󰊔</button>
+    <button onclick="openPopupsave()">󰆓</button>
+    <button onclick="openPopup()" style="border-radius: 0px 20px 20px 0px;"></button>
   </div>
   <button onclick="deletePage()" style="
     position: fixed; 
@@ -123,22 +123,18 @@ Author : Nikhil kumar
     <button class="modalBtn deleteBtn" id="deleteSession" onclick="handleDelete();">cancle</button>
   </div>
 </div>
-
+<!--- Settings -->
+<button onclick="toggleSettings()" style="position:fixed; top:10px; left:10px; font-family: nerd;  font-size: 17px; color: #c9c9c9; background: rgba(0,0,0,0.2); border: none; backdrop-filter: blur(10px); padding: 5px 20px; border-radius: 11px; " id="watermark">Codraw</button>
 <div id="settingsPanel" style="position:fixed;  color:#fff; padding:20px; border-radius:10px; width:60%; display:none;">
   <h3> Settings</h3>
-  
   <label>Telegram Image Bot Token</label>
   <input type="text" id="telegramImageBotToken"  class="input-box"><br><br>
-  
   <label>Telegram Bot Token</label>
   <input type="text" id="telegrambotToken"  resize: none;" class="input-box"><br><br>
-  
   <label>Gemini API Keys (comma separated)</label>
   <textarea id="geminiKeys" class="input-box"></textarea><br><br>
-  
   <label>Watemark</label>
   <input type="text" id="watermarkinput" resize: none;" class="input-box"><br><br><br><br>
-
   <label>Background Color</label>
   <div style="display: flex; flex-direction: row; gap: 10px;">
   <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#292966'" style="background-color: #292966; height: 35px; width: 50px; border-radius: 10px;"></div>
@@ -156,12 +152,10 @@ Author : Nikhil kumar
   <input type="text" id="className" placeholder="Channel Name" class="input-box">
   <input type="text" id="classChatId" placeholder="Chat ID" class="input-box">
   <button onclick="addClassUI()" class="btnadd"></button>
-  
   <br><br><div class="form-group">
   <label style="display: flex;  flex-direction: row; font-size: 30px;">Show Cursor:
     <input type="checkbox" id="cursorToggle" class="remove-from-screen">
 <label for="cursorToggle" class="switch"></label>
-
   </label>
 </div>
 <br>
@@ -169,14 +163,10 @@ Author : Nikhil kumar
   <button onclick="toggleSettings()" class="modalBtn deleteBtn">Close</button>
 </div>
 
-<button onclick="toggleSettings()" style="position:fixed; top:10px; left:10px; font-family: nerd;  font-size: 17px; color: #c9c9c9; background: rgba(0,0,0,0.2); border: none; backdrop-filter: blur(10px); padding: 5px 20px; border-radius: 11px; " id="watermark">Codraw</button>
-
-
 <!-- Graph Modal (paste into your HTML) -->
 <div id="graphModal" style="display:none; position: fixed; z-index: 99999; left:50%; top:50%; transform:translate(-50%,-50%); width: auto; max-width:94%; background: rgba(27, 28, 41, 0.854); border-radius:12px; padding: 12px; box-sizing: border-box;">
   <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
-        <div class="preview" id="mathPreview" style="flex:1;  border-radius:8px; border:1px solid #444444c8; background:#0d1219e0; color:#fff; font-family: 'latin-math';" ></div>
-
+    <div class="preview" id="mathPreview" style="flex:1;  border-radius:8px; border:1px solid #444444c8; background:#0d1219e0; color:#fff; font-family: 'latin-math';" ></div>
     <input id="fnInput" placeholder="e.g. sin(x)  |  2*sin(x)  |  x^2  |  cot(x)  |  sinh(2x)" style="flex:1; padding:8px; border-radius:8px; border:1px solid #444; background:#111; color:#fff; display: none;">
     <button id="gm-plot" class="mathpt"></button>
     <button id="gm-import" class="mathpt">󱀯</button>
@@ -185,10 +175,8 @@ Author : Nikhil kumar
     <button id="gm-reset" class="mathpt">󰜉</button>
     <button id="gm-close" class="mathpt" style="color:#d33;">󰅚</button>
   </div>
-
   <div style="display:flex; gap:12px;">
     <canvas id="graphCanvas" width="500" height="500" style="flex:0 0 760px; max-width:100%; height:420px; border-radius:8px; background: transparent; border: 1px solid #444;"></canvas>
-
     <div id="gm-rightpanel" style="width: 220px; display:flex; flex-direction:column; gap:8px;">
       <div id="gm-keypad" style="display:grid; grid-template-columns: repeat(9, 1fr); gap:6px; display: none;"></div>
     <div class="buttons" style="margin-top:12px; font-family: 'latin-math';">
@@ -203,8 +191,6 @@ Author : Nikhil kumar
       <button>sinh</button><button>cosh</button><button>tanh</button><button>abs</button>
     </div>
   </div>
-
-
     </div>
   </div>
 </div>
