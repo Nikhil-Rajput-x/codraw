@@ -38,7 +38,7 @@ async function gemini() {
     console.log(text);
 
     document.getElementById("answer").innerHTML =
-      '<button id="close" onclick="document.getElementById(\'answer\').style.right = \'none\'">x</button> ' + text;
+      '<button id="close" onclick="document.getElementById(\'answer\').style.display = \'none\'">x</button> ' + text;
 
     const mathx = parseGeminiMathResponse(text.trim());
     if (mathx) {
