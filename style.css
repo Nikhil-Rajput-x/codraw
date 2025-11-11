@@ -5,12 +5,16 @@ Author : Nikhil kumar
 */
 @font-face {
   font-family: 'nerd';
-  src: url('./fonts/ComicShannsMonoNerdFontPropo-Bold.otf') format('truetype');
+  src: url('https://www.nerdfonts.com/assets/fonts/Symbols-2048-em%20Nerd%20Font%20Complete.woff2') format('woff2'), 
+	   url('./fonts/ComicShannsMonoNerdFontPropo-Bold.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'flower';
-  src: url('./fonts/IndieFlower-Regular.ttf') format('truetype');
+  src: url('https://fonts.gstatic.com/s/indieflower/v24/m8JVjfNVeKWVnh3QMuKkFcZVaUuH.woff2') format('woff2'),
+       url('./fonts/IndieFlower-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
