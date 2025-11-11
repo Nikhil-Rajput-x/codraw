@@ -153,7 +153,7 @@ function openPopup() {
       </div>
       <!-- Input -->
       <div class="form-group">
-        <label>Topic:</label>
+        <label>Enter File Name:</label>
         <input type="text" id="selectedInput" class="input-box" readonly />
       </div>
       <!-- Keyboard -->
@@ -174,6 +174,7 @@ function openPopupsave() {
   document.getElementById("popup").innerHTML = `
     <div class="popup-content">
       <h2 class="title">Select Name</h2>
+      <input style="display:none;" type="text" value="Codraw"> 
       <!-- Input -->
       <div class="form-group">
         <label>Enter File Name:</label>
@@ -228,9 +229,7 @@ function buildKeyboard() {
 }
 
 function saveSelection(x) {
-  if(document.getElementById("classSelect").value){
   cls = document.getElementById("classSelect").value;
-  }
   inputx = document.getElementById("selectedInput").value;
   if (x){
       savePDF(inputx)
