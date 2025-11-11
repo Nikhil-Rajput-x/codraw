@@ -19,7 +19,7 @@ async function gemini() {
   const dataUrl = canvas.toDataURL("image/png");
 
   document.getElementById("answer").innerHTML =
-    '<button id="close" onclick="document.getElementById(\'answer\').style.right = \'none\'">x</button> Thinking...';
+    '<button id="close" onclick="document.getElementById(\'answer\').style.display = \'none\'">x</button> Thinking...';
 
   try {
     const result = await model.generateContent([
