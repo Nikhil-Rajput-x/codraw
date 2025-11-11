@@ -228,7 +228,9 @@ function buildKeyboard() {
 }
 
 function saveSelection(x) {
+  if(document.getElementById("classSelect").value){
   cls = document.getElementById("classSelect").value;
+  }
   inputx = document.getElementById("selectedInput").value;
   if (x){
       savePDF(inputx)
