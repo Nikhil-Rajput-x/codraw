@@ -1390,7 +1390,7 @@ async function savePDF(fname) {
   const dateStr = now.toLocaleDateString().replaceAll('/', '-');
   const timeStr = now.toLocaleTimeString();
   const dateTimeStr = `${dateStr} ${timeStr}`;
-  const filename = fname || dateTimeStr.replaceAll(':','..')+'.pdf';
+  const filename = fname || dateTimeStr+'.pdf';
   pdf.save(filename.endsWith('.pdf') ? filename : filename + '.pdf');
   scheduleRender();
 }
