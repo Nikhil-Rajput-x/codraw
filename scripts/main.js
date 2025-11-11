@@ -1381,14 +1381,16 @@ async function savePDF(fname) {
     pdf.setTextColor(255, 255, 255); pdf.setFont('times', 'normal'); pdf.setFontSize(15);
     const now = new Date();
     const dateStr = now.toLocaleDateString().replaceAll('/', '-');
-    const timeStr = now.toLocaleTimeString(); // e.g. "3:45:23 PM"
+    const timeStr = now.toLocaleTimeString();
     const dateTimeStr = `${dateStr} ${timeStr}`;
     const dateWidth = pdf.getTextWidth(dateTimeStr);
     pdf.text(dateTimeStr, canvas.width - 10 - dateWidth, canvas.height - 10);
   }
   const now = new Date();
   const dateStr = now.toLocaleDateString().replaceAll('/', '-');
-  const filename = fname+dateStr+'.pdf' || dateStr+'.pdf';
+  const timeStr = now.toLocaleTimeString();
+  const dateTimeStr = `${dateStr} ${timeStr}`;
+  const filename = fname || dateTimeStr+'.pdf';
   pdf.save(filename.endsWith('.pdf') ? filename : filename + '.pdf');
   scheduleRender();
 }
