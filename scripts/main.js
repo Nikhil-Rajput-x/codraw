@@ -1941,6 +1941,7 @@ function savecatch(){
       try {
         saveCurrentPage();
         autoSaveDebounced(0);
+        updateDateTime();
       } catch (e) {
         console.warn("Periodic autosave failed:", e);
       }
