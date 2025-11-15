@@ -88,8 +88,9 @@ function saveSettingsUI() {
   s.cursorEnabled = document.getElementById("cursorToggle").checked;
   s.watermark = document.getElementById("watermarkinput").value;
   saveSettings(s);
+  applyCursorSetting();
   document.body.style.backgroundColor = s.backgroundColor;
-  console.log("Settings Saved ✅");
+  console.log("Settings Saved");
 }
 
 function addClassUI() {
@@ -116,5 +117,6 @@ function applyCursorSetting() {
 }
 
 const settings = loadSettings();
+applyCursorSetting();
 document.body.style.backgroundColor = settings.backgroundColor;
 document.getElementById("watermark").innerText = settings.watermark;

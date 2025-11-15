@@ -953,8 +953,8 @@ canvas.addEventListener('pointerup', (evt) => {
   y: pos.y - 50,
   w: 100,
   h: 100,
-  imgSrc: img.src   // ✅ only keep URL
-  // ❌ do not include: img: img
+  imgSrc: img.src   //  only keep URL
+  //  do not include: img: img
 };
 objects.push(o);
 
@@ -1048,7 +1048,7 @@ function normalizeShape(o) {
     if (o.h < 0) {
       o.y += o.h;
       o.h = Math.abs(o.h);
-      o.rotation = 180; // 🔴 flip 180° if drawn up
+      o.rotation = 180; // flip 180° if drawn up
     }}
   }
   else{

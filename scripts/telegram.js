@@ -18,7 +18,7 @@ async function sharePDF() {
 // Redraw page
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-// ✅ Use background color from settings
+//  Use background color from settings
 const settings = JSON.parse(localStorage.getItem("Codraw_Settings") || "{}");
 ctx.fillStyle = settings.backgroundColor || "#161821";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -43,12 +43,12 @@ for (const o of pageObjects) {
     const imgData = canvas.toDataURL('image/jpeg');
     pdf.addImage(imgData, 'jpeg', 0, 0, canvas.width, canvas.height);
 
-    // ✅ Watermark
+    //  Watermark
     pdf.setTextColor(28, 227, 117);
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(20);
     pdf.text(settings.watermark, 10, canvas.height - 10);
-    // ✅ Date
+    // Date
     pdf.setTextColor(255, 255, 255);
     pdf.setFont('times', 'normal');
     pdf.setFontSize(15);
@@ -69,19 +69,19 @@ for (const o of pageObjects) {
   scheduleRender();
 }
 async function sendPDFtoTelegram(pdfBlob) {
-  // ✅ Load settings instead of hardcoding
+  // Load settings instead of hardcoding
   const settings = loadSettings();
   const BOT_TOKEN = settings.telegrambotToken; 
   const chat_ids = {};
   settings.classes.forEach(c => { chat_ids[c.name] = c.chatId; });
 
   if (!BOT_TOKEN) {
-    alert("⚠️ Telegram Send Token not set in settings");
+    alert("Telegram Send Token not set in settings");
     return;
   }
 
   if (!chat_ids[cls]) {
-    alert("⚠️ No chat ID found for channel: " + cls);
+    alert("No chat ID found for channel: " + cls);
     return;
   }
 
@@ -108,13 +108,13 @@ async function sendPDFtoTelegram(pdfBlob) {
     xhr.onload = function () {
       if (xhr.status === 200) {
         const data = JSON.parse(xhr.responseText);
-        console.log("📤 Telegram response:", data);
+        console.log("Telegram response:", data);
         if (data.ok) {
           closePopup();
-          alert("✅ PDF sent to Telegram!");
+          alert("PDF sent to Telegram!");
           resolve(data);
         } else {
-          alert("❌ Failed: " + data.description);
+          alert(" Failed: " + data.description);
           closePopup();
           reject(data);
         }

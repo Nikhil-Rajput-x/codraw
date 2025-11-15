@@ -22,20 +22,21 @@ Author : Nikhil kumar
 		<label class="tab" for="white" style="background-color: white;">&nbsp;</label>
 		<input type="radio" id="red" name="colour"  onclick="currentColor='red'">
 		<label class="tab" for="red" style="background-color: red;">&nbsp;</label>
-		<input type="radio" id="blue" name="colour"  onclick="currentColor='rgb(2, 2, 105)'">
-		<label class="tab" for="blue" style="background-color: rgb(2, 2, 105);">&nbsp;</label>
-    <input type="radio" id="green" name="colour"  onclick="currentColor='green'">
-		<label class="tab" for="green" style="background-color: green;">&nbsp;</label>
+		<input type="radio" id="blue" name="colour"  onclick="currentColor='#0084ff'">
     <input type="radio" id="orange" name="colour"  onclick="currentColor='orange'">
 		<label class="tab" for="orange" style="background-color: orange;">&nbsp;</label>
-    <input type="radio" id="blue-sky" name="colour"  onclick="currentColor='#0b6efd'">
-		<label class="tab" for="blue-sky" style="background-color: #0b6efd;">&nbsp;</label>
-    <input type="radio" id="purple" name="colour"  onclick="currentColor='purple'">
-		<label class="tab" for="purple" style="background-color: purple;">&nbsp;</label>
-    <input type="radio" id="magenta" name="colour"  onclick="currentColor='magenta'">
-		<label class="tab" for="magenta" style="background-color: magenta;">&nbsp;</label>
-		<input type="radio" id="custom" name="colour"  onclick="currentColor='magenta'">
-		<input type="color" id="colorPicker" value="#00E096" for="custom" style="margin-left: -5px; margin-top: 10px;">
+		<label class="tab" for="blue" style="background-color: #0084ff;">&nbsp;</label>
+    <input type="radio" id="green" name="colour"  onclick="currentColor='#2EFF31'">
+		<label class="tab" for="green" style="background-color: #2EFF31">&nbsp;</label>
+    <input type="radio" id="blue-sky" name="colour"  onclick="currentColor='#c851ff'">
+		<label class="tab" for="blue-sky" style="background-color: #c851ff;">&nbsp;</label>
+    <input type="radio" id="purple" name="colour"  onclick="currentColor='#fa5cff'">
+		<label class="tab" for="purple" style="background-color: #fa5cff;">&nbsp;</label>
+    <input type="radio" id="magenta" name="colour"  onclick="currentColor='#00eeff'">
+		<label class="tab" for="magenta" style="background-color: #00eeff;">&nbsp;</label>
+		<input type="radio" id="custom" name="colour">
+    <label class="tab" for="custom" id="customlabel" style="background: linear-gradient(45deg, blue,pink);">
+		<input type="color" id="colorPicker" value="#00E096" for="custom" onclick="document.getElementById('custom').click();document.getElementById('customlabel').style.background = document.getElementById('colorPicker').value;" onchange="document.getElementById('customlabel').style.background = document.getElementById('colorPicker').value;" style="margin-left: 0px; transform: scale(1.2); opacity: 0;"></label>
     <i class="flex-break"></i>
 	</div>
     <div class="tabs">
@@ -128,22 +129,22 @@ Author : Nikhil kumar
 <div id="settingsPanel" style="position:fixed;  color:#fff; padding:20px; border-radius:10px; width:60%; display:none;">
   <h3> Settings</h3>
   <label>Telegram Image Bot Token</label>
-  <input type="text" id="telegramImageBotToken"  class="input-box"><br><br>
+  <input type="text" id="telegramImageBotToken"  class="input-box" onchange="saveSettingsUI()"><br><br>
   <label>Telegram Bot Token</label>
-  <input type="text" id="telegrambotToken"  resize: none;" class="input-box"><br><br>
+  <input type="text" id="telegrambotToken"  resize: none;" class="input-box" onchange="saveSettingsUI()"><br><br>
   <label>Gemini API Keys (comma separated)</label>
   <textarea id="geminiKeys" class="input-box"></textarea><br><br>
   <label>Watemark</label>
-  <input type="text" id="watermarkinput" resize: none;" class="input-box"><br><br><br><br>
+  <input type="text" id="watermarkinput" resize: none;" class="input-box" onchange="saveSettingsUI()"><br><br><br><br>
   <label>Background Color</label>
   <div style="display: flex; flex-direction: row; gap: 10px;">
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#292966'" style="background-color: #292966; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0A3C30'" style="background-color: #0A3C30; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0a2e33'" style="background-color: #0a2e33; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#332216'" style="background-color: #332216; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#161821'" style="background-color: #161821; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0f0e47'" style="background-color: #0f0e47; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <input type="color" id="bgColor" style="height: 35px; width: 50px; border-radius: 10px;">
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#292966';saveSettingsUI()" style="background-color: #292966; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0A3C30';saveSettingsUI()" style="background-color: #0A3C30; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0a2e33';saveSettingsUI()" style="background-color: #0a2e33; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#332216';saveSettingsUI()" style="background-color: #332216; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#161821';saveSettingsUI()" style="background-color: #161821; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0f0e47';saveSettingsUI()" style="background-color: #0f0e47; height: 35px; width: 50px; border-radius: 10px;"></div>
+  <input type="color" id="bgColor" style="height: 35px; width: 50px; border-radius: 10px;" onchange="saveSettingsUI()">
   </div>
   <br><br>
   
@@ -159,8 +160,7 @@ Author : Nikhil kumar
   </label>
 </div>
 <br>
-  <button onclick="saveSettingsUI()" class="modalBtn loadBtn">Save</button>
-  <button onclick="toggleSettings()" class="modalBtn deleteBtn">Close</button>
+  <button onclick="saveSettingsUI();toggleSettings()" class="modalBtn loadBtn">Done</button>
 </div>
 
 <!-- Graph Modal (paste into your HTML) -->
