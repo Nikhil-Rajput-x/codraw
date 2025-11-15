@@ -3,19 +3,20 @@ this file is part of project Codraw
 Author : Nikhil kumar
 (c) 2025 uzumaki_arts
 */
+
 @font-face {
   font-family: 'nerd';
-  src: url('./fonts/ComicShannsMonoNerdFontPropo-Bold.otf') format('opentype');
+  src: url('fonts/ComicShannsMonoNerdFontPropo-Bold.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'flower';
-  src: url('./fonts/IndieFlower-Regular.ttf') format('truetype');
+  src: url('fonts/IndieFlower-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'latin-math';
-  src: url('./fonts/latin-modern-math.regular.otf') format('opentype');
+  src: url('fonts/latin-modern-math.regular.otf') format('opentype');
 }
 
 h1{
@@ -46,24 +47,7 @@ body {
   height: 0;
 }
 
-.page-changer{
-  position: absolute;
-  left: -100px;
-}
 
-#pageCounter {
-  position: fixed;
-  bottom: 25px;
-  left: 40px;
-  padding: 3px 6px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  font-family: nerd, sans-serif;
-  font-size: 8px;
-  border-radius: 4px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-}
 
 #toolbar {
   display: flex;
@@ -100,6 +84,8 @@ body {
   font-size: 15px;
   color: #ffffff;
 }
+
+
 
 input[type="range"] {
   appearance: none;
@@ -197,6 +183,29 @@ ions button:hover {
 
 .tabs * {
   z-index: 2;
+
+}
+
+.page-changer{
+  position: fixed;
+  left: 20px;
+  bottom: 10px;
+}
+.page-changer button{
+  border: none;
+  border-radius: 0px;
+  background: #0d1117f3;
+  backdrop-filter: blur(10px);
+  color: #eee;
+  transition: all 0.25s ease-in-out;
+  font-family: nerd;
+  font-size: 12px;
+  height: 30px;
+  width: 30px;
+}
+
+.page-changer button:hover {
+  background: #24212896;
 }
 
 .glider {
@@ -256,6 +265,7 @@ ions button:hover {
   border-radius: 50px;
   transition: color 0.5s ease-in;
 }
+
 
 .tab2 {
   display: flex;
@@ -384,8 +394,8 @@ input:focus{
   flex-direction: column;
   font-family: nerd;
   gap: 10px;
-  bottom: -45px;
-  left: 130px;
+  bottom: -55px;
+  right: 20px;
   width: 200px;
   height: auto;
   background-color: #0d111784;
@@ -445,7 +455,7 @@ input:focus{
   top: 0;
   left: 0;
   opacity: 0;
-  transform: translateX(20px) translateY(85px);
+  transform: translateX(35px) translateY(95px) scale(1.5);
 }
 .mar{
   height: 80px;
