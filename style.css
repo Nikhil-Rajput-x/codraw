@@ -52,7 +52,7 @@ Author : Nikhil kumar
   --color-state-success-a: rgba(63,185,80,0.12);
   --color-state-danger-a: rgba(248,81,73,0.12);
   --accent-a: rgba(88,166,255,0.12);
-  --bg-tertiary-a: rgba(22,27,34,0.6);
+  --bg-tertiary-a: rgba(22, 27, 34, 0.5);
   --transparent: transparent;
   /* Borders that are alpha variants of states */
   --color-state-success-border: rgba(63,185,80,0.18);
@@ -865,10 +865,10 @@ label {
   width: 100%;
   padding: 10px;
   border-radius: var(--size-border-radius-medium);
-  border: 1px solid var(--border-secondary);
+  border: 1px solid var(--color-accent-hover);
   margin-top: 6px;
   font-size: 15px;
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary-a);
   color: rgba(0,0,0,0);
 }
 
