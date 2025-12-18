@@ -1078,7 +1078,7 @@ label {
 .license-pre {
   white-space: pre-wrap;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Segoe UI Mono', monospace;
-  background: rgba(255,255,255,0.02);
+  background: rgba(6, 14, 28, 0.81);
   padding: 12px;
   border-radius: 8px;
   max-height: 420px;
