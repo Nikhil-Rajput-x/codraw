@@ -61,7 +61,6 @@ Author : Nikhil kumar
   --glass: rgba(255, 255, 255, 0.02);
   --switch-bg: rgba(255, 255, 255, 0.15);
   --bg-setting: #0d111757;
-  --bg-input: #161b22; 
 }
 
 /* Global scrollbar theming */
@@ -870,7 +869,7 @@ label {
   border: 1px solid var(--color-accent-hover);
   margin-top: 6px;
   font-size: 15px;
-  background: var(--bg-input);
+  background: var(--transparent);
   color: rgba(0,0,0,0);
 }
 
@@ -1167,7 +1166,7 @@ label {
   padding: 10px;
   border-radius: 12px;
   border: 1px solid var(--color-accent-hover);
-  background: var(--bg-input);
+  background: var(--transparent);
   color: rgba(0, 0, 0, 0);
   font-size: 14px;
   font-family: nerd;
