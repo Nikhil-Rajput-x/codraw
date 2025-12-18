@@ -1044,7 +1044,7 @@ label {
   left: 20px;
   width: 760px;
   transform: none;
-  background: var(--glider-bg);
+  background: var(--glass);
   backdrop-filter: blur(10px);
   border-radius: var(--size-border-radius-medium);
   padding: 20px;
