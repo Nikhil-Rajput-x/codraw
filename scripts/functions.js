@@ -864,6 +864,15 @@ $('pencilSize')?.addEventListener('input', e => { pencilSize = parseInt(e.target
 $('pencilSizeSetting')?.addEventListener('input', e => { const v = parseInt(e.target.value); if (!isNaN(v)) { pencilSize = v; const main = document.getElementById('pencilSize'); if (main && parseInt(main.value) !== v) main.value = v; updateCursor(); } } );
 // initialize size inputs on load
 window.addEventListener('load', ()=>{ const s = document.getElementById('pencilSizeSetting'); if (s) s.value = pencilSize; const main = document.getElementById('pencilSize'); if (main) main.value = pencilSize; const pv = document.getElementById('pencilSizeValue'); if (pv) pv.textContent = String(pencilSize); });
+// Detect if the browser renders the <input type="range"> as vertical natively
+window.addEventListener('load', ()=>{
+  const main = document.getElementById('pencilSize');
+  if (!main) return;
+  // if the element is taller than it is wide it's probably already vertical in this engine
+  if (main.clientHeight > main.clientWidth) {
+    main.classList.add('vertical-native');
+  }
+});
 // sync radio quick-preset controls (S/M/L/XL)
 
 $('eraserSize')?.addEventListener('input', e => { eraserSize = parseInt(e.target.value); updateCursor(); scheduleRender(); });

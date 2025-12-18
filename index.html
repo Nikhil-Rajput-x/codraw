@@ -46,7 +46,8 @@ Author : Nikhil kumar
     <div class="tabs">
       <!-- Vertical pencil size control replaces S/M/L/XL quick buttons -->
       <div class="pencil-vertical" title="Pencil size">
-        <input id="pencilSize" class="pencil-range vertical" type="range" min="1" max="60" value="12" orient="vertical" aria-label="Pencil size">
+        <!-- use aria-orientation for accessibility; avoid non-standard `orient` attribute which may behave differently across engines -->
+        <input id="pencilSize" class="pencil-range vertical" type="range" min="1" max="60" value="12" aria-orientation="vertical" aria-label="Pencil size">
         <div id="pencilSizeValue" class="pencil-size-value" aria-live="polite" aria-atomic="true">12</div>
       </div>
     </div>

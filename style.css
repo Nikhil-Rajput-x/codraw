@@ -76,8 +76,11 @@ Author : Nikhil kumar
   appearance:none;
   -webkit-appearance:none;
   background:transparent;
-  transform: rotate(-90deg) translateY(80%);
-  transform-origin:center;}
+  /* rotate the horizontal range so it appears vertical in WebKit/Chromium engines */
+  transform: rotate(-90deg) translateY(50%);
+  transform-origin: center center;
+  display: block;
+}
 .pencil-preview{display:none}
 *::-webkit-scrollbar {
   width: 12px;
@@ -104,6 +107,9 @@ input[type=range].pencil-range::-moz-range-thumb{width:18px;height:18px;border-r
 
 @media (max-width:800px){ .pencil-range.vertical{height:140px} }
 
+/* If the browser provides a native vertical rendering, avoid our rotation (prevents double-rotation and interaction bugs) */
+.pencil-range.vertical.vertical-native { transform: none; width: 18px; height: 100px; }
+
 /* numeric value next to pencil slider */
 .pencil-size-value{
   font-family:nerd;
@@ -112,7 +118,8 @@ input[type=range].pencil-range::-moz-range-thumb{width:18px;height:18px;border-r
   margin-top:6px;
   text-align:center;
   width:100%;
-  transform: translateX(60%);
+  /* keep numeric readout centered beside the control in most engines */
+  transform: translateX(50%);
 }
 
 /* Component-specific scrollbar tweaks */
@@ -1037,7 +1044,7 @@ label {
   left: 20px;
   width: 760px;
   transform: none;
-  background: var(--bg-secondary);
+  background: var(--glider-bg);
   backdrop-filter: blur(10px);
   border-radius: var(--size-border-radius-medium);
   padding: 20px;
