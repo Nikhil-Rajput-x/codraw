@@ -78,7 +78,7 @@ Author : Nikhil kumar
   -webkit-appearance:none;
   background:transparent;
   /* rotate the horizontal range so it appears vertical in WebKit/Chromium engines */
-  transform: rotate(-90deg) translateY(50%);
+  transform: rotate(-90deg) translateY(80%) translateX(20px);
   transform-origin: center center;
   display: block;
 }
