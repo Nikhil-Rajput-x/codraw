@@ -60,6 +60,8 @@ Author : Nikhil kumar
   /* Light glass surface used in small elements */
   --glass: rgba(255, 255, 255, 0.02);
   --switch-bg: rgba(255, 255, 255, 0.15);
+  --bg-setting: #0d111757;
+  --bg-input: #161b22; 
 }
 
 /* Global scrollbar theming */
@@ -868,7 +870,7 @@ label {
   border: 1px solid var(--color-accent-hover);
   margin-top: 6px;
   font-size: 15px;
-  background: var(--bg-tertiary-a);
+  background: var(--bg-input);
   color: rgba(0,0,0,0);
 }
 
@@ -1044,7 +1046,7 @@ label {
   left: 20px;
   width: 760px;
   transform: none;
-  background: var(--glass);
+  background: var(--bg-setting);
   backdrop-filter: blur(10px);
   border-radius: var(--size-border-radius-medium);
   padding: 20px;
