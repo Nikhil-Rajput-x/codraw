@@ -119,7 +119,6 @@ input[type=range].pencil-range::-moz-range-thumb{width:18px;height:18px;border-r
   margin-top:6px;
   text-align:center;
   width:100%;
-  /* keep numeric readout centered beside the control in most engines */
   transform: translateX(50%);
 }
 
@@ -1041,8 +1040,8 @@ label {
 
 #settingsPanel {
   position: fixed;
-  top: 80px;
-  left: 20px;
+  top: 45px;
+  left: 10px;
   width: 760px;
   transform: none;
   background: var(--bg-setting);
