@@ -34,41 +34,64 @@ Author : Nikhil kumar
 		<label class="tab" for="purple" style="background-color: #fa5cff;">&nbsp;</label>
     <input type="radio" id="magenta" name="colour"  onclick="currentColor='#00eeff'">
 		<label class="tab" for="magenta" style="background-color: #00eeff;">&nbsp;</label>
+    <input type="radio" id="grad" name="colour"  onclick="setGradient();randomizeGradient();">
+		<label class="tab" for="grad" style="background: linear-gradient(45deg, red,orange,yellow,green,blue,indigo,violet);">&nbsp;</label>
+    <input type="radio" id="glgrad" name="colour"  onclick="setGlobalGradient();">
+		<label class="tab" for="glgrad" style="background: radial-gradient(red,orange,yellow,green,blue,indigo,violet);">&nbsp;</label>
 		<input type="radio" id="custom" name="colour">
-    <label class="tab" for="custom" id="customlabel" style="background: linear-gradient(45deg, blue,pink);">
-		<input type="color" id="colorPicker" value="#00E096" for="custom" onclick="document.getElementById('custom').click();document.getElementById('customlabel').style.background = document.getElementById('colorPicker').value;" onchange="document.getElementById('customlabel').style.background = document.getElementById('colorPicker').value;" style="margin-left: 0px; transform: scale(1.2); opacity: 0;"></label>
+    <label class="tab" for="custom" id="customlabel" style="background: black;"><p style="position: absolute; color: white; text-shadow: 1px 1px black;">+</p>
+		<input type="color" id="colorPicker" value="#000000" for="custom" onclick="document.getElementById('custom').click();document.getElementById('customlabel').style.background = document.getElementById('colorPicker').value;" onchange="document.getElementById('customlabel').style.background = document.getElementById('colorPicker').value;" style="margin-left: 0px; transform: scale(1.2); opacity: 0;"></label>
     <i class="flex-break"></i>
 	</div>
-    <div class="tabs"">
-      <input type="radio" id="pencil-1" name="pencilSize"  onclick="pencilSize=1">
-      <label class="tab2" for="pencil-1">S</label>
-      <input type="radio" id="pencil-2" name="pencilSize" onclick="pencilSize=3" checked="">
-      <label class="tab2" for="pencil-2" >M</label>
-      <input type="radio" id="pencil-3" name="pencilSize" onclick="pencilSize=5">
-      <label class="tab2" for="pencil-3">L</label>
-      <input type="radio" id="pencil-4" name="pencilSize" onclick="pencilSize=12">
-      <label class="tab2" for="pencil-4">XL</label>
-      <span class="glider"></span>
+    <div class="tabs">
+      <!-- Vertical pencil size control replaces S/M/L/XL quick buttons -->
+      <div class="pencil-vertical" title="Pencil size">
+        <input id="pencilSize" class="pencil-range vertical" type="range" min="1" max="60" value="12" orient="vertical" aria-label="Pencil size">
+        <div id="pencilSizeValue" class="pencil-size-value" aria-live="polite" aria-atomic="true">12</div>
+      </div>
     </div>
   <div class="page-changer" onclick="updatePageCounter()">
     <button onclick="prevPage()" style="border-radius: 20px 0px 0px 20px; margin-right: -5px;" ></button>
-    <button id="pageCounter" style="width: auto;">1 / 1</button>
+    <button id="pageCounter" style="width: auto; padding-left: 10px; padding-right: 10px;" >1 / 1</button>
     <button onclick="nextPage()" style="border-radius: 0px 20px 20px 0px; margin-left: -5px;"></button>
   </div>
 
+  <!-- Page viewer: overlay modal with thumbnails of all pages -->
+  <div id="pageViewer" class="page-viewer" aria-hidden="true" style="display:none;">
+    <div class="page-viewer-content">
+      <div class="pv-header">
+        <h3>Pages</h3>
+        <button id="pvClose" class="pv-close">Close</button>
+      </div>
+      <div id="pageViewerGrid" class="page-viewer-grid"></div>
+    </div>
+  </div>
+
   <div id="toolbar" onclick="selected=null">
-    <label style="display: none;">
-      <input id="pencilSize" type="range" min="1" max="20" value="5">
-    </label>
+    <script>
+      // Provide a safe fallback so the toolbar button doesn't throw if the graph module
+      // hasn't been initialized yet. `scripts/graph.js` will overwrite this when ready.
+      if (!window.openGraphModal) {
+        window.openGraphModal = function(){
+          const gm = document.getElementById('graphModal');
+          if (gm) { gm.style.display = 'block'; return; }
+          console.warn('openGraphModal called before graph module initialized');
+          // Friendly message for users (non-blocking)
+          const tip = document.getElementById('gm-error');
+          if (tip) { tip.style.display='block'; tip.textContent = 'Graph module is still loading — try again in a moment.'; setTimeout(()=>{ tip.style.display='none'; tip.textContent=''; }, 3000); }
+        };
+      }
+    </script>
+    <!-- toolbar pencil control removed (moved to quick-bar) -->
     <label style="display: none;">
       <input id="eraserSize" type="range" min="5" max="100" value="20">
     </label>
-<span class="sap"></span>
+
     <button onclick="undo()" style="border-radius: 20px 0px 0px 20px;">󰕌</button>
     <button onclick="redo()" style="border-radius: 0px 20px 20px 0px;">󰑎</button>
     <span class="sap"></span><span class="sap"></span>
-    <button data-tool="select" onclick="document.getElementById('toolOptions').style.display = 'none';" style="border-radius: 20px 0px 0px 20px;">󰇀</button>
-    <button data-tool="eraser" onclick="document.getElementById('toolOptions').style.display = 'none';">󰇾</button>
+    <button data-tool="select" title="Select tool" onclick="showToolOptions('select')" style="border-radius: 20px 0px 0px 20px;">󰇀</button>
+    <button data-tool="lasso-eraser" onclick="showToolOptions('eraser')">󰇾</button>
     <button data-tool="pencil" onclick="showToolOptions('pencil')"></button>
     <button data-tool="rect" onclick="showToolOptions('rect')"></button>
     <button data-tool="cuboid" onclick="showToolOptions('cuboid');" ></button>
@@ -80,31 +103,16 @@ Author : Nikhil kumar
     <button onclick="addImage()">󰡼</button>
     <button onclick="addPDF()"></button>
     <button id="toggleGrid">󰋁</button>
-    <button onclick="document.getElementById('graphModal').style.display = 'block';">󰍘</button>
+    <button onclick="openGraphModal();">󰍘</button>
     <button id="ask">󰺴</button>
     <button onclick="location.reload(true);">󰑓</button>
     <button onclick="toggleFullscreen()">󰊔</button>
     <button onclick="openPopupsave()">󰆓</button>
+    <button onclick="savePNG()"></button>
     <button onclick="openPopup()"></button>
-    <button onclick="openPopup()" style="border-radius: 0px 20px 20px 0px; color: #cf6679;"></button>
+    <button onclick="deletePage()" style="border-radius: 0px 20px 20px 0px; color: #cf6679;"></button>
   </div>
-  <button onclick="deletePage()" style="
-    position: fixed; 
-    bottom: 25px;
-    right: 15px;
-    height:auto;
-    padding: 3px 6px;
-    background: rgba(0,0,0,0.6);
-    color: #ff0000;
-    font-family: nerd, sans-serif;
-    font-size: 8px;
-    border-radius: 4px;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    outline: none;
-    border: none;
-    z-index: 100;">
-  </button>
+
   <canvas id="stage" width="1200" height="600"></canvas>
   <div id="customCursor"></div>
   <div id="startup">
@@ -114,7 +122,7 @@ Author : Nikhil kumar
   <div id="propertiesPanel">
     <div id="ckbox"></div>
   </div>
-    <div id="answer">
+    <div id="answer" style="display: none;">
       <button id="close" onclick="document.getElementById('answer').style.right = '-60%'">x</button>
     </div>
   <div id="chartContainer" style="width:500px; height:500px; position: absolute; top: -100%">
@@ -131,41 +139,90 @@ Author : Nikhil kumar
 </div>
 <!--- Settings -->
 <button onclick="toggleSettings()" style="position:fixed; top:10px; left:10px; font-family: nerd;  font-size: 17px; color: #c9c9c9; background: rgba(0,0,0,0.2); border: none; backdrop-filter: blur(10px); padding: 5px 20px; border-radius: 11px; " id="watermark">Codraw</button>
-<div id="settingsPanel" style="position:fixed;  color:#fff; padding:20px; border-radius:10px; width:60%; display:none;">
-  <h3> Settings</h3>
-  <label>Telegram Image Bot Token</label>
-  <input type="text" id="telegramImageBotToken"  class="input-box" onchange="saveSettingsUI()"><br><br>
-  <label>Telegram Bot Token</label>
-  <input type="text" id="telegrambotToken"  resize: none;" class="input-box" onchange="saveSettingsUI()"><br><br>
-  <label>Gemini API Keys (comma separated)</label>
-  <textarea id="geminiKeys" class="input-box"></textarea><br><br>
-  <label>Watemark</label>
-  <input type="text" id="watermarkinput" resize: none;" class="input-box" onchange="saveSettingsUI()"><br><br><br><br>
-  <label>Background Color</label>
-  <div style="display: flex; flex-direction: row; gap: 10px;">
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#292966';saveSettingsUI()" style="background-color: #292966; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0A3C30';saveSettingsUI()" style="background-color: #0A3C30; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0a2e33';saveSettingsUI()" style="background-color: #0a2e33; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#332216';saveSettingsUI()" style="background-color: #332216; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#161821';saveSettingsUI()" style="background-color: #161821; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0f0e47';saveSettingsUI()" style="background-color: #0f0e47; height: 35px; width: 50px; border-radius: 10px;"></div>
-  <input type="color" id="bgColor" style="height: 35px; width: 50px; border-radius: 10px;" onchange="saveSettingsUI()">
+<div id="settingsPanel" style="position:fixed;  color:#fff; padding:0px; border-radius:10px; width:760px; display:none;">
+  <div class="settings-layout">
+    <div class="settings-sidebar">
+      <button class="settings-tab active" data-panel="general">󰍗<span>General</span></button>
+      <button class="settings-tab" data-panel="gemini">󰀅<span>Gemini</span></button>
+      <button class="settings-tab" data-panel="telegram"><span>Telegram</span></button>
+      <button class="settings-tab" data-panel="about">󰞋<span>About</span></button>
+      <button class="settings-tab" data-panel="licence">󰿃<span>Licence</span></button>
+    </div>
+    <div class="settings-content">
+      <div class="settings-panel-content" data-panel="general">
+        <h3> General</h3>
+        <label>Watemark</label>
+        <input type="text" id="watermarkinput" class="input-box" onchange="saveSettingsUI()"><br><br>
+        <label>Background Color</label>
+        <div class="bgrow">
+          <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#292966';saveSettingsUI()" style="background-color: #292966;"></div>
+          <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0A3C30';saveSettingsUI()" style="background-color: #0A3C30;"></div>
+          <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0a2e33';saveSettingsUI()" style="background-color: #0a2e33;"></div>
+          <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#332216';saveSettingsUI()" style="background-color: #332216;"></div>
+          <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#161821';saveSettingsUI()" style="background-color: #161821;"></div>
+          <div class="bg-colour" onclick="document.getElementById('bgColor').value = '#0f0e47';saveSettingsUI()" style="background-color: #0f0e47;"></div>
+          <input type="color" id="bgColor" style="height: 35px; width: 50px; border-radius: 10px;" onchange="saveSettingsUI()">
+        </div>
+        <br>
+        <label>Subjects</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <input type="text" id="subjectName" placeholder="" class="input-box" style="flex:1;">
+          <button class="btnadd" onclick="addSubjectUI()"></button>
+        </div>
+        <div id="subjectList" style="margin-top:8px;"></div>
+        <br>
+        <label>Pencil Size</label>
+        <input id="pencilSizeSetting" type="range" min="1" max="60" value="12
+        "><br>
+        <div class="form-group">
+          <label>Show Cursor:
+            <input type="checkbox" id="cursorToggle" class="remove-from-screen">
+            <label for="cursorToggle" class="switch"></label>
+          </label>
+        </div>
+        <br>
+      </div>
+
+      <div class="settings-panel-content" data-panel="gemini" style="display:none;">
+        <h3>󰀅 Gemini</h3>
+        <label>Gemini API Keys (comma separated)</label>
+        <textarea id="geminiKeys" class="input-box"></textarea>
+        <br>
+        <label>Gemini Model</label>
+        <input id="geminiModel" list="geminiModels" type="text" class="input-box" placeholder="gemini-2.5-flash" onchange="saveSettingsUI()">
+        <datalist id="geminiModels">
+          <option value="gemini-2.5-flash"></option>
+          <option value="gemini-1.5-pro"></option>
+          <option value="gemini-1.5-flash"></option>
+        </datalist>
+        <div style="font-size:12px; color:var(--text-secondary); margin-top:6px">Try: gemini-2.5-flash, gemini-1.5-pro, gemini-1.5-flash</div>
+        
+      </div>
+      <div class="settings-panel-content" data-panel="telegram" style="display:none;">
+        <h3>󰖟 Telegram</h3>
+        <label>Telegram Image Bot Token</label>
+        <input type="text" id="telegramImageBotToken" class="input-box"><br><br>
+        <label>Telegram Bot Token</label>
+        <input type="text" id="telegrambotToken" class="input-box"><br><br>
+        <h4>Channels</h4>
+        <div id="classList"></div>
+        <input type="text" id="className" placeholder="Channel Name" class="input-box">
+        <input type="text" id="classChatId" placeholder="Chat ID" class="input-box">
+        <button onclick="addClassUI()" class="btnadd"></button>
+      </div>
+      <div class="settings-panel-content" data-panel="about" style="display:none;">
+        <h3>󰞋 About</h3>
+        <p>Codraw &copy; 2025 - Settings</p>
+      </div>
+      <div class="settings-panel-content" data-panel="licence" style="display:none;">
+        <h3>󰿃 Licence</h3>
+          <div id="licenseContent" class="license-pre"> </div>
+      </div>
+    </div>
   </div>
-  <br><br>
-  
-  <h4>Channels</h4>
-  <div id="classList"></div>
-  <input type="text" id="className" placeholder="Channel Name" class="input-box">
-  <input type="text" id="classChatId" placeholder="Chat ID" class="input-box">
-  <button onclick="addClassUI()" class="btnadd"></button>
-  <br><br><div class="form-group">
-  <label style="display: flex;  flex-direction: row; font-size: 30px;">Show Cursor:
-    <input type="checkbox" id="cursorToggle" class="remove-from-screen">
-<label for="cursorToggle" class="switch"></label>
-  </label>
-</div>
-<br>
-  <button onclick="saveSettingsUI();toggleSettings()" class="modalBtn loadBtn">Done</button>
+  <div style="padding:8px; text-align:right;">
+    <button onclick="saveSettingsUI();toggleSettings()" class="modalBtn loadBtn">Done</button>
+  </div>
 </div>
 
 <!-- Graph Modal (paste into your HTML) -->
@@ -207,15 +264,29 @@ Author : Nikhil kumar
 
   import * as pkg from "https://esm.run/@google/generative-ai";
   window.GoogleGenerativeAI = pkg.GoogleGenerativeAI || pkg.default.GoogleGenerativeAI;
-</script>
+  </script>
+  <!-- Core globals & helpers (must load first) -->
+  <script src="./scripts/variables.js"></script>
+  <script src="./scripts/draw.js"></script>
+  <script src="./scripts/functions.js"></script>
+
+  <!-- UI panels & settings -->
+  <script src="./scripts/properties.js"></script>
   <script src="./scripts/setting.js"></script>
+
+  <!-- External libs & libs that need document ready before using -->
   <script src="./scripts/jspdf.umd.min.js"></script>
-  <script src="./scripts/main.js"></script>
+
+  <!-- Main app code -->
+  <script src="./scripts/database.js"></script>
+  <script src="./scripts/eventlistener.js"></script>
+
+  <!-- Optional features & integrations -->
   <script src="./scripts/pdf.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai/dist/index.umd.js"></script>
   <script src="./scripts/telegram.js"></script>
   <script src="./scripts/graph.js"></script>
   <script src="./scripts/gemini.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai/dist/index.umd.js"></script>
   <script>
     showToolOptions('pencil')
   </script>

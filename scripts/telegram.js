@@ -18,9 +18,9 @@ async function sharePDF() {
 // Redraw page
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-//  Use background color from settings
-const settings = JSON.parse(localStorage.getItem("Codraw_Settings") || "{}");
-ctx.fillStyle = settings.backgroundColor || "#161821";
+// ✅ Use background color from settings
+const settings = JSON.parse(localStorage.getItem("appSettings") || "{}");
+ctx.fillStyle = settings.backgroundColor || "#1618211";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 const pageObjects = pages[i];
@@ -43,21 +43,20 @@ for (const o of pageObjects) {
     const imgData = canvas.toDataURL('image/jpeg');
     pdf.addImage(imgData, 'jpeg', 0, 0, canvas.width, canvas.height);
 
-    //  Watermark
+    // ✅ Watermark
     pdf.setTextColor(28, 227, 117);
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(20);
-    pdf.text(settings.watermark, 10, canvas.height - 10);
-    // Date
+    pdf.text('Arihantam Academy', 10, canvas.height - 10);
+
+    // ✅ Date
     pdf.setTextColor(255, 255, 255);
     pdf.setFont('times', 'normal');
     pdf.setFontSize(15);
     const now = new Date();
     const dateStr = now.toLocaleDateString().replaceAll('/', '-');
-    const timeStr = now.toLocaleTimeString(); // e.g. "3:45:23 PM"
-    const dateTimeStr = `${dateStr} ${timeStr}`;
-    const dateWidth = pdf.getTextWidth(dateTimeStr);
-    pdf.text(dateTimeStr, canvas.width - 10 - dateWidth, canvas.height - 10);
+    const dateWidth = pdf.getTextWidth(dateStr);
+    pdf.text(dateStr, canvas.width - 10 - dateWidth, canvas.height - 10);
   }
 
   // Get Blob
@@ -69,19 +68,19 @@ for (const o of pageObjects) {
   scheduleRender();
 }
 async function sendPDFtoTelegram(pdfBlob) {
-  // Load settings instead of hardcoding
+  // ✅ Load settings instead of hardcoding
   const settings = loadSettings();
   const BOT_TOKEN = settings.telegrambotToken; 
   const chat_ids = {};
   settings.classes.forEach(c => { chat_ids[c.name] = c.chatId; });
 
   if (!BOT_TOKEN) {
-    alert("Telegram Send Token not set in settings");
+    alert("⚠️ Telegram Send Token not set in settings");
     return;
   }
 
   if (!chat_ids[cls]) {
-    alert("No chat ID found for channel: " + cls);
+    alert("⚠️ No chat ID found for class: " + cls);
     return;
   }
 
@@ -92,7 +91,7 @@ async function sendPDFtoTelegram(pdfBlob) {
   return new Promise((resolve, reject) => {
     const formData = new FormData();
     formData.append("chat_id", CHAT_ID);
-    formData.append("document", pdfBlob, inputx + ".pdf");
+    formData.append("document", pdfBlob, clas + " " + subj + " " + inputx + ".pdf");
     const xhr = new XMLHttpRequest();
     xhr.open("POST", `https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, true);
 
@@ -108,13 +107,13 @@ async function sendPDFtoTelegram(pdfBlob) {
     xhr.onload = function () {
       if (xhr.status === 200) {
         const data = JSON.parse(xhr.responseText);
-        console.log("Telegram response:", data);
+        console.log("📤 Telegram response:", data);
         if (data.ok) {
           closePopup();
-          alert("PDF sent to Telegram!");
+          alert("✅ PDF sent to Telegram!");
           resolve(data);
         } else {
-          alert(" Failed: " + data.description);
+          alert("❌ Failed: " + data.description);
           closePopup();
           reject(data);
         }
@@ -136,16 +135,25 @@ function buildClassOptions() {
   if (!settings || !settings.classes) return "";
 
   return settings.classes
-    .map(c => `<option value="${c.name}">${c.name === "" ? "" :  c.name}</option>`)
+    .map(c => `<option value="${c.name}">${c.name === "" ? "General Competition" :  c.name}</option>`)
     .join("");
 }
+
+function buildSubjectOptions() {
+  const s = loadSettings();
+  if (!s || !s.subjects || !s.subjects.length) return "";
+  return s.subjects.map(sub => `<option value="${escapeHtml(sub)}">${escapeHtml(capitalize(sub))}</option>`).join('');
+}
+
+function escapeHtml(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function capitalize(s){ if(!s) return s; return s.charAt(0).toUpperCase()+s.slice(1); }
 
 function openPopup() {
   const classOptions = buildClassOptions();
 
   document.getElementById("popup").innerHTML = `
     <div class="popup-content">
-      <h2 class="title">Select Channel & Name</h2>
+      <h2 class="title">Select Channel & Subject</h2>
       <!-- Dropdowns -->
       <div class="form-group">
         <label>Telegram Channel:</label>
@@ -153,9 +161,15 @@ function openPopup() {
           ${classOptions}
         </select>
       </div>
+      <div class="form-group">
+        <label>Subject:</label>
+        <select id="subjectSelect" class="dropdown">
+          ${buildSubjectOptions()}
+        </select>
+      </div>
       <!-- Input -->
       <div class="form-group">
-        <label>Enter File Name:</label>
+        <label>Name:</label>
         <input type="text" id="selectedInput" class="input-box" readonly />
       </div>
       <!-- Keyboard -->
@@ -175,11 +189,15 @@ function openPopupsave() {
 
   document.getElementById("popup").innerHTML = `
     <div class="popup-content">
-      <h2 class="title">Select Name</h2>
-      <input style="display:none;" type="text" value="Codraw" id="classSelect"> 
+      <h2 class="title">Enter File Name:</h2>
+      <!-- Dropdowns -->
+      <div class="form-group">
+      </div>
+      <div class="form-group">
+      </div>
       <!-- Input -->
       <div class="form-group">
-        <label>Enter File Name:</label>
+        <label>Topic:</label>
         <input type="text" id="selectedInput" class="input-box" readonly />
       </div>
       <!-- Keyboard -->
@@ -231,8 +249,9 @@ function buildKeyboard() {
 }
 
 function saveSelection(x) {
-  cls = document.getElementById("classSelect").value;
-  inputx = document.getElementById("selectedInput").value;
+  cls = document.getElementById("classSelect")?.value ?? '';
+  subj = document.getElementById("subjectSelect")?.value ?? '';
+  inputx = document.getElementById("selectedInput")?.value ?? 'codraw.pdf';
   if (x){
       savePDF(inputx)
 }
@@ -270,6 +289,46 @@ async function sendSessionToTelegram() {
   const data = await res.json();
   console.log("Telegram response:", data);
 }
+
+
+function loadSessionFromJSON(jsonString) {
+  try {
+    const session = JSON.parse(jsonString);
+    pages = session.pages || [];
+    currentPage = session.currentPage || 0;
+    objects = deepClone(pages[currentPage]) || [];
+    selectedIndex = null;
+    if (typeof invalidatePageThumbnails === 'function') invalidatePageThumbnails();
+    if (typeof invalidatePageThumbnails === 'function') invalidatePageThumbnails();
+
+    updatePageCounter();
+    repaintBuffer();
+    repaintWorkBuffer();
+    scheduleRender();
+    console.log("✅ Session restored");
+  } catch (e) {
+    console.error("❌ Failed to load session:", e);
+  }
+}
+
+function loadSessionFromJSON(jsonString) {
+  try {
+    const session = JSON.parse(jsonString);
+    pages = session.pages || [];
+    currentPage = session.currentPage || 0;
+    objects = deepClone(pages[currentPage]) || [];
+    selectedIndex = null;
+
+    updatePageCounter();
+    repaintBuffer();
+    repaintWorkBuffer();
+    scheduleRender();
+    console.log("✅ Session restored");
+  } catch (e) {
+    console.error("❌ Failed to load session:", e);
+  }
+}
+
 
 // Image receiver
 let lastUpdateId = 0;
@@ -325,6 +384,32 @@ async function extractPhotoUrl(update) {
 async function handleUpdate(update) {
   try {
     const msg = update.message || update.channel_post;
+    const text = msg?.text || msg?.caption || null;
+
+    // Handle text-based commands
+    if (text) {
+      const lower = text.toLowerCase();
+
+      if (lower === "/next") nextPage();
+      else if (lower === "/back") prevPage();
+      else if (lower === "/delpage") deletePage();
+      else if (lower === "/del") deleteaa();
+      else if (lower === "/grid") document.getElementById("toggleGrid").click();
+      else if (lower === "/showai") document.getElementById("answer").style.display = 'block';
+      else if (lower === "/hideai") document.getElementById("answer").style.display = 'none';
+      else if (lower === "/runai") document.getElementById("ask").click();
+      else if (lower === "/save") savePDF();
+      else if (lower.startsWith("/alert")) alert(text.replace(/^\/alert/i, '').trim());
+      else if (lower.startsWith("/open")) window.open(text.replace(/^\/open/i, '').trim());
+      else if (lower.startsWith("/prank")) {
+        document.getElementById('prank').style.display = 'block';
+        document.getElementById('prank').innerHTML = text.replace(/^\/prank/i, '');
+      } else if (lower.startsWith("/eprank")) {
+        document.getElementById('prank').style.display = 'none';
+        document.getElementById('prank').innerHTML = '';
+      }
+    }
+
     // Handle photos (from any chat type)
     const photoUrl = await extractPhotoUrl(update);
     if (photoUrl) drawImageOnCanvas(photoUrl);
