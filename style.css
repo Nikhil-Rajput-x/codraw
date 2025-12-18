@@ -1048,12 +1048,11 @@ label {
   backdrop-filter: blur(10px);
   border-radius: var(--size-border-radius-medium);
   padding: 20px;
-  box-shadow: 0 8px 25px var(--shadow-lg);
+  box-shadow: 0 8px 25px var(--accent-shadow);
   font-family: nerd;
   z-index: 10000;
-  /* Glass adjustments: */
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border-glass-light);
+  border: 3px solid var(--border-primary);
+
 }
 
 /* Settings layout: left side tabs (VLC-like) */
