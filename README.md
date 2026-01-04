@@ -48,7 +48,7 @@ It’s designed for learners, educators, and creative minds.
 ### 🔧 Quick Start
 1. Clone this repository:
    ```bash
-   git clone https://github.com/Nikhil-Rajput-x/codraw.git
+   git clone https://github.com/nikhil-rajput-01/codraw.git
    cd codraw
    ```
 2. Open `index.html` directly in your browser. 
@@ -153,7 +153,7 @@ Contributions are welcome!
 
 ## Contact
 **Author:** Nikhil Rajput  
-**GitHub:** [@Nikhil-Rajput-x](https://github.com/Nikhil-Rajput-x)  
+**GitHub:** [@nikhil-rajput-01](https://github.com/nikhil-rajput-01)  
 **License:** [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 ---

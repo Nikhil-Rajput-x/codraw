@@ -2,9 +2,8 @@
 this file is part of project Codraw
 Author : Nikhil Singh Rajput
 (c) 2026 Nikhil Singh Rajput
-*/
-
-/* --- Color Variables (Darker Liquid Glass Theme) --- */
+ */
+ /* --- Color Variables (Darker Liquid Glass Theme) --- */
 :root {
   /* Backgrounds: Pure Black to Dark Gray */
   --bg-primary: #000000; /* PURE BLACK background */
@@ -29,7 +28,7 @@ Author : Nikhil Singh Rajput
   --color-accent-active: #388bfd50;
   /* Secondary Accent/State (Toned down States) */
   --color-state-success: #3fb95050; /* Green (e.g., save) */
-  --color-state-danger: #f8514950; /* Red (e.g., delete/cancel) */
+  --color-state-danger: #f8514949; /* Red (e.g., delete/cancel) */
   --color-state-warning: #d2992250; /* Yellow/Orange (e.g., warning) */
   --color-state-settings: #a978ff50; /* Muted purple for settings (Glass accent) */
 
@@ -135,7 +134,7 @@ input[type=range].pencil-range::-moz-range-thumb{width:18px;height:18px;border-r
 .gm-response pre{background:rgba(0,0,0,0.35); padding:8px; border-radius:6px; overflow:auto}
 .mathml-display{display:block;margin:8px 0;padding:6px;border-radius:6px;background:rgba(255,255,255,0.02);overflow:auto}
 .mathml-inline{display:inline-block;vertical-align:middle}
-
+#gm-rightpanel {background-color: rgba(27, 28, 41, 0.854); margin-left: 20px; border-radius: 20px;}
 /* Improve MathJax rendering in the compact panel: slightly larger operators and better line-height */
 .gm-response .MathJax, .gm-response .mjx-chtml {
   font-size: 1.02em; /* subtle upscaling for clarity */
@@ -1321,7 +1320,7 @@ code {
   .gm-controls { order:2; }
 }
   .preview{margin:12px 0;min-height:46px;padding:5px;border-radius:8px;background:transparent;border:1px dashed var(--border-primary);font-size:23px; font-family: nerd; padding-left: 30px;}
-  .buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:8px; margin-left: 20px; padding-right: 40px; padding-left:40x; border-radius: 20px;}
   .buttons button{padding:8px 6px;border-radius:8px;background:var(--bg-tertiary);border:0;cursor:pointer;font-weight:600;color: var(--text-light); font-family: nerd;}
   .buttons button:hover{background:var(--bg-tertiary)}
   .math{font-family:Cambria Math,"STIXGeneral","Times New Roman",'latin-math';white-space:normal}
