@@ -146,51 +146,40 @@ function drawObject(o, isSelected = false, ctxTarget = ctx) {
         case 'pencil': case 'highlighter': drawPencilStroke(ctxTarget, o); break;
      case 'rhombus': { 
             ctxTarget.beginPath(); 
-            const slant = o.w * 0.2; // 20% skew
-            ctxTarget.moveTo(o.x + slant, o.y);             // Top-Left (skewed right)
-            ctxTarget.lineTo(o.x + o.w, o.y);               // Top-Right
-            ctxTarget.lineTo(o.x + o.w - slant, o.y + o.h); // Bottom-Right (skewed left)
-            ctxTarget.lineTo(o.x, o.y + o.h);               // Bottom-Left
+            const slant = o.w * 0.2; 
+            ctxTarget.moveTo(o.x + slant, o.y);        
+            ctxTarget.lineTo(o.x + o.w, o.y);
+            ctxTarget.lineTo(o.x + o.w - slant, o.y + o.h); 
+            ctxTarget.lineTo(o.x, o.y + o.h);  
             ctxTarget.closePath(); 
             if (o.fill) ctxTarget.fill(); else ctxTarget.stroke(); 
             break; 
         }
-
         case 'pentagon': { ctxTarget.beginPath(); const px = o.x, py = o.y, pw = o.w, ph = o.h; ctxTarget.moveTo(px + pw / 2, py); ctxTarget.lineTo(px + pw, py + ph * 0.38); ctxTarget.lineTo(px + pw * 0.81, py + ph); ctxTarget.lineTo(px + pw * 0.19, py + ph); ctxTarget.lineTo(px, py + ph * 0.38); ctxTarget.closePath(); if (o.fill) ctxTarget.fill(); else ctxTarget.stroke(); break; }
         case 'hexagon': { ctxTarget.beginPath(); const hx = o.x, hy = o.y, hw = o.w, hh = o.h; ctxTarget.moveTo(hx + hw * 0.25, hy); ctxTarget.lineTo(hx + hw * 0.75, hy); ctxTarget.lineTo(hx + hw, hy + hh * 0.5); ctxTarget.lineTo(hx + hw * 0.75, hy + hh); ctxTarget.lineTo(hx + hw * 0.25, hy + hh); ctxTarget.lineTo(hx, hy + hh * 0.5); ctxTarget.closePath(); if (o.fill) ctxTarget.fill(); else ctxTarget.stroke(); break; }
-        
-        // 2. Sphere: Removed vertical ellipse
-        case 'sphere': { 
+                case 'sphere': { 
             const sx = o.x + o.w / 2, sy = o.y + o.h / 2, srx = Math.abs(o.w) / 2, sry = Math.abs(o.h) / 2; 
             ctxTarget.beginPath(); 
-            ctxTarget.ellipse(sx, sy, srx, sry, 0, 0, Math.PI * 2); // Outer Circle
+            ctxTarget.ellipse(sx, sy, srx, sry, 0, 0, Math.PI * 2); /
             if (o.fill) { 
                 ctxTarget.fill(); 
             } else { 
                 ctxTarget.stroke(); 
                 ctxTarget.beginPath(); 
-                // Only one inner ellipse (Horizontal)
                 ctxTarget.ellipse(sx, sy, srx, sry * 0.3, 0, 0, Math.PI * 2); 
                 ctxTarget.stroke(); 
             } 
             break; 
         }
-
-        case 'tetrahedron': { const tx = o.x, ty = o.y, tw = o.w, th = o.h; ctxTarget.beginPath(); ctxTarget.moveTo(tx + tw / 2, ty); ctxTarget.lineTo(tx, ty + th); ctxTarget.lineTo(tx + tw, ty + th); ctxTarget.closePath(); if (o.fill) { ctxTarget.fill(); } else { ctxTarget.stroke(); ctxTarget.beginPath(); ctxTarget.moveTo(tx + tw / 2, ty); ctxTarget.lineTo(tx + tw / 2, ty + th * 0.8); ctxTarget.lineTo(tx, ty + th); ctxTarget.moveTo(tx + tw / 2, ty + th * 0.8); ctxTarget.lineTo(tx + tw, ty + th); ctxTarget.stroke(); } break; }
-        
-        // 3. Square Pyramid: Updated to match your SVG (Base Rect + Apex Lines)
+        case 'tetrahedron': { const tx = o.x, ty = o.y, tw = o.w, th = o.h; ctxTarget.beginPath(); ctxTarget.moveTo(tx + tw / 2, ty); ctxTarget.lineTo(tx, ty + th); ctxTarget.lineTo(tx + tw, ty + th); ctxTarget.closePath(); if (o.fill) { ctxTarget.fill(); } else { ctxTarget.stroke(); ctxTarget.beginPath(); ctxTarget.moveTo(tx + tw / 2, ty); ctxTarget.lineTo(tx + tw / 2, ty + th * 0.8); ctxTarget.lineTo(tx, ty + th); ctxTarget.moveTo(tx + tw / 2, ty + th * 0.8); ctxTarget.lineTo(tx + tw, ty + th); ctxTarget.stroke(); } break; }        
         case 'squarepyramid': { 
             const spx = o.x, spy = o.y, spw = o.w, sph = o.h;
-            // Base takes bottom 50% of height (similar to your SVG ratio)
             const baseX = spx;
             const baseY = spy + sph * 0.5;
             const baseH = sph * 0.5;
             const apexX = spx + spw / 2;
             const apexY = spy; 
-
             if (o.fill) {
-                // For fill, we just draw the outer triangle silhouette usually, 
-                // or the main visible faces. Simple triangle silhouette for fill is safest.
                 ctxTarget.beginPath();
                 ctxTarget.moveTo(apexX, apexY);
                 ctxTarget.lineTo(spx, spy + sph);
@@ -198,19 +187,11 @@ function drawObject(o, isSelected = false, ctxTarget = ctx) {
                 ctxTarget.closePath();
                 ctxTarget.fill();
             } else {
-                // Wireframe mode (Matches SVG)
-                // 1. Draw Base Rect
                 ctxTarget.strokeRect(baseX, baseY, spw, baseH);
-                
-                // 2. Draw lines from Apex to all 4 corners
                 ctxTarget.beginPath();
-                // Apex to Top-Left
                 ctxTarget.moveTo(apexX, apexY); ctxTarget.lineTo(baseX, baseY);
-                // Apex to Top-Right
                 ctxTarget.moveTo(apexX, apexY); ctxTarget.lineTo(baseX + spw, baseY);
-                // Apex to Bottom-Left
                 ctxTarget.moveTo(apexX, apexY); ctxTarget.lineTo(baseX, baseY + baseH);
-                // Apex to Bottom-Right
                 ctxTarget.moveTo(apexX, apexY); ctxTarget.lineTo(baseX + spw, baseY + baseH);
                 ctxTarget.stroke();
             }
