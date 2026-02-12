@@ -262,12 +262,11 @@ Author : Nikhil kumar
   import * as pdfjsLib from './scripts/pdf.min.mjs';
   pdfjsLib.GlobalWorkerOptions.workerSrc = './pdf.worker.min.mjs';
   </script><script type="module">
-
-  import * as pkg from "https://esm.run/@google/generative-ai";
+  import * as pkg from "https://cdn.jsdelivr.net/npm/@google/generative-ai@0.24.1/dist/index.min.js";
   window.GoogleGenerativeAI = pkg.GoogleGenerativeAI || pkg.default.GoogleGenerativeAI;
   </script>
   <script type="module">
-    import { getStroke } from 'https://esm.sh/perfect-freehand@1.2.3';
+    import { getStroke } from './scripts/freehand.mjs';
     window.getStroke = getStroke;
   </script>
   <!-- Core globals & helpers (must load first) -->
