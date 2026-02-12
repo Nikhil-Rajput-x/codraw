@@ -160,7 +160,7 @@ function drawObject(o, isSelected = false, ctxTarget = ctx) {
                 case 'sphere': { 
             const sx = o.x + o.w / 2, sy = o.y + o.h / 2, srx = Math.abs(o.w) / 2, sry = Math.abs(o.h) / 2; 
             ctxTarget.beginPath(); 
-            ctxTarget.ellipse(sx, sy, srx, sry, 0, 0, Math.PI * 2); /
+            ctxTarget.ellipse(sx, sy, srx, sry, 0, 0, Math.PI * 2); 
             if (o.fill) { 
                 ctxTarget.fill(); 
             } else { 
