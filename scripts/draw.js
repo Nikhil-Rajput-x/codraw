@@ -24,17 +24,53 @@ function buildPathFor(ctxRef, o) {
         case 'rect':
         case 'cuboid':
         case 'image':
+            // Cuboids use the rect bounding box for hit detection
             ctxRef.rect(Math.min(o.x, o.x + o.w), Math.min(o.y, o.y + o.h), Math.abs(o.w), Math.abs(o.h));
             break;
+        case 'sphere':
         case 'circle':
         case 'cylinder':
+        case 'cone': // Cone often shares the circle/ellipse bounding logic or triangle, depending on preference. Here mapped to ellipse.
             ctxRef.ellipse(o.x + o.w / 2, o.y + o.h / 2, Math.abs(o.w) / 2, Math.abs(o.h) / 2, 0, 0, Math.PI * 2);
             break;
+        case 'tetrahedron':
+        case 'squarepyramid':
         case 'triangle':
+            // These 3D shapes share the same triangular silhouette for hit detection
             ctxRef.moveTo(o.x, o.y + o.h);
             ctxRef.lineTo(o.x + o.w, o.y + o.h);
             ctxRef.lineTo(o.x + o.w / 2, o.y);
             ctxRef.closePath();
+            break;
+        case 'rhombus':
+            ctxRef.moveTo(o.x + o.w / 2, o.y);
+            ctxRef.lineTo(o.x + o.w, o.y + o.h / 2);
+            ctxRef.lineTo(o.x + o.w / 2, o.y + o.h);
+            ctxRef.lineTo(o.x, o.y + o.h / 2);
+            ctxRef.closePath();
+            break;
+        case 'pentagon':
+            {
+                const px = o.x, py = o.y, pw = o.w, ph = o.h;
+                ctxRef.moveTo(px + pw / 2, py);
+                ctxRef.lineTo(px + pw, py + ph * 0.38);
+                ctxRef.lineTo(px + pw * 0.81, py + ph);
+                ctxRef.lineTo(px + pw * 0.19, py + ph);
+                ctxRef.lineTo(px, py + ph * 0.38);
+                ctxRef.closePath();
+            }
+            break;
+        case 'hexagon':
+            {
+                const hx = o.x, hy = o.y, hw = o.w, hh = o.h;
+                ctxRef.moveTo(hx + hw * 0.25, hy);
+                ctxRef.lineTo(hx + hw * 0.75, hy);
+                ctxRef.lineTo(hx + hw, hy + hh * 0.5);
+                ctxRef.lineTo(hx + hw * 0.75, hy + hh);
+                ctxRef.lineTo(hx + hw * 0.25, hy + hh);
+                ctxRef.lineTo(hx, hy + hh * 0.5);
+                ctxRef.closePath();
+            }
             break;
         default:
             ctxRef.rect(o.x || 0, o.y || 0, o.w || 0, o.h || 0);
@@ -108,6 +144,12 @@ function drawObject(o, isSelected = false, ctxTarget = ctx) {
     if (o.type === 'highlighter') { ctxTarget.lineWidth = o.width || Math.max(1, Math.round(pencilSize * 1.5)); }
     switch (o.type) {
         case 'pencil': case 'highlighter': drawPencilStroke(ctxTarget, o); break;
+        case 'rhombus': { ctxTarget.beginPath(); ctxTarget.moveTo(o.x + o.w / 2, o.y); ctxTarget.lineTo(o.x + o.w, o.y + o.h / 2); ctxTarget.lineTo(o.x + o.w / 2, o.y + o.h); ctxTarget.lineTo(o.x, o.y + o.h / 2); ctxTarget.closePath(); if (o.fill) ctxTarget.fill(); else ctxTarget.stroke(); break; }
+        case 'pentagon': { ctxTarget.beginPath(); const px = o.x, py = o.y, pw = o.w, ph = o.h; ctxTarget.moveTo(px + pw / 2, py); ctxTarget.lineTo(px + pw, py + ph * 0.38); ctxTarget.lineTo(px + pw * 0.81, py + ph); ctxTarget.lineTo(px + pw * 0.19, py + ph); ctxTarget.lineTo(px, py + ph * 0.38); ctxTarget.closePath(); if (o.fill) ctxTarget.fill(); else ctxTarget.stroke(); break; }
+        case 'hexagon': { ctxTarget.beginPath(); const hx = o.x, hy = o.y, hw = o.w, hh = o.h; ctxTarget.moveTo(hx + hw * 0.25, hy); ctxTarget.lineTo(hx + hw * 0.75, hy); ctxTarget.lineTo(hx + hw, hy + hh * 0.5); ctxTarget.lineTo(hx + hw * 0.75, hy + hh); ctxTarget.lineTo(hx + hw * 0.25, hy + hh); ctxTarget.lineTo(hx, hy + hh * 0.5); ctxTarget.closePath(); if (o.fill) ctxTarget.fill(); else ctxTarget.stroke(); break; }
+        case 'sphere': { const sx = o.x + o.w / 2, sy = o.y + o.h / 2, srx = Math.abs(o.w) / 2, sry = Math.abs(o.h) / 2; ctxTarget.beginPath(); ctxTarget.ellipse(sx, sy, srx, sry, 0, 0, Math.PI * 2); if (o.fill) { ctxTarget.fill(); } else { ctxTarget.stroke(); ctxTarget.beginPath(); ctxTarget.ellipse(sx, sy, srx, sry * 0.3, 0, 0, Math.PI * 2); ctxTarget.stroke(); ctxTarget.beginPath(); ctxTarget.ellipse(sx, sy, srx * 0.3, sry, 0, 0, Math.PI * 2); ctxTarget.stroke(); } break; }
+        case 'tetrahedron': { const tx = o.x, ty = o.y, tw = o.w, th = o.h; ctxTarget.beginPath(); ctxTarget.moveTo(tx + tw / 2, ty); ctxTarget.lineTo(tx, ty + th); ctxTarget.lineTo(tx + tw, ty + th); ctxTarget.closePath(); if (o.fill) { ctxTarget.fill(); } else { ctxTarget.stroke(); ctxTarget.beginPath(); ctxTarget.moveTo(tx + tw / 2, ty); ctxTarget.lineTo(tx + tw / 2, ty + th * 0.8); ctxTarget.lineTo(tx, ty + th); ctxTarget.moveTo(tx + tw / 2, ty + th * 0.8); ctxTarget.lineTo(tx + tw, ty + th); ctxTarget.stroke(); } break; }
+        case 'squarepyramid': { const spx = o.x, spy = o.y, spw = o.w, sph = o.h; const apexX = spx + spw / 2; if (o.fill) { ctxTarget.beginPath(); ctxTarget.moveTo(apexX, spy); ctxTarget.lineTo(spx, spy + sph); ctxTarget.lineTo(spx + spw, spy + sph); ctxTarget.closePath(); ctxTarget.fill(); } else { ctxTarget.beginPath(); ctxTarget.moveTo(spx, spy + sph); ctxTarget.lineTo(spx + spw, spy + sph); ctxTarget.lineTo(spx + spw * 0.8, spy + sph * 0.7); ctxTarget.lineTo(spx + spw * 0.2, spy + sph * 0.7); ctxTarget.closePath(); ctxTarget.stroke(); ctxTarget.beginPath(); ctxTarget.moveTo(spx, spy + sph); ctxTarget.lineTo(apexX, spy); ctxTarget.moveTo(spx + spw, spy + sph); ctxTarget.lineTo(apexX, spy); ctxTarget.moveTo(spx + spw * 0.8, spy + sph * 0.7); ctxTarget.lineTo(apexX, spy); ctxTarget.moveTo(spx + spw * 0.2, spy + sph * 0.7); ctxTarget.lineTo(apexX, spy); ctxTarget.stroke(); } break; }
         case 'polygon': if (!o.points || !o.points.length) break; ctxTarget.beginPath(); ctxTarget.moveTo(o.points[0].x, o.points[0].y); for (let i = 1; i < o.points.length; i++) ctxTarget.lineTo(o.points[i].x, o.points[i].y); ctxTarget.closePath(); if (o.fill) ctxTarget.fill(); else ctxTarget.stroke(); break;
         case 'line': case 'arrow': ctxTarget.beginPath(); ctxTarget.moveTo(o.x, o.y); ctxTarget.lineTo(o.x + o.w, o.y + o.h); ctxTarget.stroke(); if (o.type === 'arrow') drawArrowHead(ctxTarget, o.x, o.y, o.x + o.w, o.y + o.h, o.width); break;
         case 'rect': { const rx = Math.min(o.x, o.x + o.w), ry = Math.min(o.y, o.y + o.h), rw = Math.abs(o.w), rh = Math.abs(o.h); if (o.fill) ctxTarget.fillRect(rx, ry, rw, rh); else ctxTarget.strokeRect(rx, ry, rw, rh); break; }
