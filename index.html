@@ -266,6 +266,10 @@ Author : Nikhil kumar
   import * as pkg from "https://esm.run/@google/generative-ai";
   window.GoogleGenerativeAI = pkg.GoogleGenerativeAI || pkg.default.GoogleGenerativeAI;
   </script>
+  <script type="module">
+    import { getStroke } from 'https://esm.sh/perfect-freehand@1.2.3';
+    window.getStroke = getStroke;
+  </script>
   <!-- Core globals & helpers (must load first) -->
   <script src="./scripts/variables.js"></script>
   <script src="./scripts/draw.js"></script>

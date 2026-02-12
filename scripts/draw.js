@@ -40,9 +40,62 @@ function buildPathFor(ctxRef, o) {
             ctxRef.rect(o.x || 0, o.y || 0, o.w || 0, o.h || 0);
     }
 }
+function getSvgPathFromStroke(stroke) {
+    if (!stroke.length) return "";
+    const d = stroke.reduce(
+        (acc, [x0, y0], i, arr) => {
+            const [x1, y1] = arr[(i + 1) % arr.length];
+            acc.push(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2);
+            return acc;
+        },
+        ["M", ...stroke[0], "Q"]
+    );
+    d.push("Z");
+    return d.join(" ");
+}
 
-function drawPencilStroke(ctxRef, o) { if (!o.points || o.points.length < 2) return; ctxRef.beginPath(); ctxRef.moveTo(o.points[0].x, o.points[0].y); for (let i = 1; i < o.points.length - 1; i++) { const midX = (o.points[i].x + o.points[i + 1].x) / 2; const midY = (o.points[i].y + o.points[i + 1].y) / 2; ctxRef.quadraticCurveTo(o.points[i].x, o.points[i].y, midX, midY); } ctxRef.stroke(); }
+function drawPencilStroke(ctxRef, o) {
+    if (!o.points || o.points.length < 2) return;
+    if (o.dotted || o.dashed) {
+        ctxRef.save();
+        ctxRef.lineJoin = "round";
+        ctxRef.lineCap = "round";
+        ctxRef.lineWidth = (o.width)*1 || 20;
+        const dashSize = o.width ? o.width * 4 : 10; 
+        ctxRef.setLineDash([dashSize, dashSize]); 
 
+        ctxRef.beginPath();
+        ctxRef.moveTo(o.points[0].x, o.points[0].y);
+
+        for (let i = 1; i < o.points.length - 1; i++) {
+            const midX = (o.points[i].x + o.points[i + 1].x) / 2;
+            const midY = (o.points[i].y + o.points[i + 1].y) / 2;
+            ctxRef.quadraticCurveTo(o.points[i].x, o.points[i].y, midX, midY);
+        }
+        
+        const last = o.points[o.points.length - 1];
+        ctxRef.lineTo(last.x, last.y);
+        ctxRef.stroke(); 
+        ctxRef.restore();
+        return;
+    }
+    const inputPoints = o.points.map(p => [
+        p.x, 
+        p.y, 
+        p.pressure || 0.5 
+    ]);
+    const stroke = getStroke(inputPoints, {
+        size: o.width * 1.6 || 10,
+        thinning: 0.5,
+        smoothing: 0.5,
+        streamline: 0.5,
+        start: { taper: 0, cap: true },
+        end: { taper: 0, cap: true }
+    });
+    const pathData = getSvgPathFromStroke(stroke);
+    const myPath = new Path2D(pathData);
+    ctxRef.fill(myPath);
+}
 function drawArrowHead(ctxRef, x1, y1, x2, y2, width) { const headlen = 15 + (width || 2); const angle = Math.atan2(y2 - y1, x2 - x1); ctxRef.beginPath(); ctxRef.moveTo(x2, y2); ctxRef.lineTo(x2 - headlen * Math.cos(angle - Math.PI / 6), y2 - headlen * Math.sin(angle - Math.PI / 6)); ctxRef.moveTo(x2, y2); ctxRef.lineTo(x2 - headlen * Math.cos(angle + Math.PI / 6), y2 - headlen * Math.sin(angle + Math.PI / 6)); ctxRef.stroke(); }
 
 function drawObject(o, isSelected = false, ctxTarget = ctx) {

@@ -486,7 +486,7 @@ ions button:hover {
   border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  z-index: 99999;
+  z-index: 9998999;
 }
 
 input:focus{
@@ -1136,7 +1136,16 @@ label {
   align-items:center;
   margin-bottom: 12px;
 }
-.pv-close { background: var(--transparent); border: none; color: var(--text-light); padding: 6px 10px; border-radius: 8px; cursor: pointer; }
+
+.pv-close { 
+  background: var(--color-state-danger); 
+  border: none;
+  color: var(--text-light); 
+  padding: 6px 10px; 
+  border-radius: 8px; 
+  cursor: pointer; 
+}
+
 .page-viewer-grid {
   display:flex;
   flex-direction:column;

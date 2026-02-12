@@ -52,6 +52,7 @@ function removeClass(index) {
 
 
 function toggleSettings() {
+  showToolOptions('select')
   const panel = document.getElementById("settingsPanel");
   panel.style.display = (panel.style.display === "none") ? "block" : "none";
   if (panel.style.display === "block") {
